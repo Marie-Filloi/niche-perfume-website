@@ -73,10 +73,10 @@ Part 1 covers project planning and the foundational HTML structure:
 Shared across all five pages:
 - **Header/Navigation:** Home | About | Products | Enquiry | Contact
 - **Footer:** Contact info, social links, copyright
-```
-Shared across all five pages:
-- **Header/Navigation:** Home | About | Products | Enquiry | Contact
-- **Footer:** Contact info, social links, copyright
+
+## Wireframe
+![Niche Perfumes Homepage Wireframe](docs/wireframe.png)
+
 
 ## Changelog
 - **Part 1 — Planning:** Website Project Proposal drafted for Niche Perfumes, including

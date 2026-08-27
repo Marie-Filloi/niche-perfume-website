@@ -65,7 +65,18 @@ Part 1 covers project planning and the foundational HTML structure:
 - HTML structure for all five pages, linked via a shared navigation menu
 - All images sourced and integrated, matching the colour scheme defined in the proposal
 
-*Part 2 (CSS styling) and Part 3 (JavaScript functionality) will be added in later submissions.*
+## Part 2 Details
+Part 2 covers CSS styling and responsive design:
+- External stylesheet (`css/style.css`) linked to all five HTML pages
+- Base styles (reset, typography, colour scheme) applied consistently across the site
+- Layout structure built with Flexbox (header/nav, hero, product grids, forms)
+- Visual styling using the brand palette (Deep Black, Champagne Gold, Ivory White, Soft Grey)
+- Interactive states added with `:hover` and `:focus` pseudo-classes (navigation links, buttons, form fields)
+- Responsive design implemented with media queries at 768px and 480px breakpoints
+- Responsive image (`srcset`/`sizes`) added to the homepage hero image, serving a smaller image on mobile screens
+- Tested using browser developer tools across multiple screen sizes: 375px (mobile), 400px (mobile), 768px (tablet), 1024px, and 1440px (desktop)
+
+*Part 3 (JavaScript functionality) will be added in a later submission.*
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -92,6 +103,18 @@ Shared across all five pages:
   replaced.
 - **Part 1 — Content Fixes:** Contact details updated; colour scheme documented with a swatch
   table matching the coded palette.
+
+  - **Part 2 — CSS Styling:** Created external stylesheet and linked it to all five pages;
+  applied base styles, typography, and the brand colour palette across header, hero,
+  featured products, about, products, enquiry, and contact sections.
+- **Part 2 — Layout:** Implemented Flexbox layouts for navigation, hero section, product
+  grids, and the enquiry form.
+- **Part 2 — Interactivity:** Added hover and focus states on navigation links, buttons,
+  and form fields for better usability.
+- **Part 2 — Responsive Design:** Added media queries at 768px and 480px breakpoints to
+  adapt the navigation, hero, and image layouts for tablet and mobile screens.
+- **Part 2 — Responsive Images:** Added `srcset`/`sizes` to the homepage hero image to
+  serve a smaller image on mobile devices.
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
@@ -177,3 +200,6 @@ in warm ambient lighting*. [Photograph]. Pexels. Available at:
 https://www.pexels.com/photo/woman-shopping-at-perfume-kiosk-in-mall-34990739/ (Accessed: 13
 August 2026).
 
+### Tools Used
+
+I Love IMG (2026) *Resize Image*. Available at: https://www.iloveimg.com/resize-image (Accessed: 27 August 2026).

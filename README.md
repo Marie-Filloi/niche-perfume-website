@@ -68,13 +68,49 @@ Part 1 covers project planning and the foundational HTML structure:
 ## Part 2 Details
 Part 2 covers CSS styling and responsive design:
 - External stylesheet (`css/style.css`) linked to all five HTML pages
+- Design-token system using CSS custom properties (`:root` variables) for colours,
+  typography, spacing, and border-radius, so the whole site can be restyled from one place
+- Custom typography pairing via Google Fonts: "Playfair Display" for headings, "Lato" for body text
 - Base styles (reset, typography, colour scheme) applied consistently across the site
-- Layout structure built with Flexbox (header/nav, hero, product grids, forms)
+- Layout structure built with Flexbox (header/nav, hero, product previews, forms) and
+  CSS Grid (Products page "More From Our Collection" gallery)
 - Visual styling using the brand palette (Deep Black, Champagne Gold, Ivory White, Soft Grey)
-- Interactive states added with `:hover` and `:focus` pseudo-classes (navigation links, buttons, form fields)
+- Interactive states added with `:hover`, `:focus-visible`, and `:active` pseudo-classes
+  (navigation links, buttons, form fields, product images)
 - Responsive design implemented with media queries at 768px and 480px breakpoints
-- Responsive image (`srcset`/`sizes`) added to the homepage hero image, serving a smaller image on mobile screens
-- Tested using browser developer tools across multiple screen sizes: 375px (mobile), 400px (mobile), 768px (tablet), 1024px, and 1440px (desktop)
+- Responsive image (`srcset`/`sizes`) added to the homepage hero image, serving a smaller
+  image on mobile screens
+- Tested using browser developer tools across multiple screen sizes: 375px (mobile),
+  400px (mobile), 768px (tablet), 1024px, and 1440px (desktop)
+  
+## Responsive Design Testing
+Screenshots were captured using Chrome DevTools' device toolbar at three widths:
+Desktop (1440px), Tablet (768px), and Mobile (375px).
+
+### Home
+| Desktop | Tablet | Mobile |
+|---|---|---|
+| ![Home Desktop](docs/home-desktop.png) | ![Home Tablet](docs/home-tablet.png) | ![Home Mobile](docs/home-mobile.png) |
+
+### About
+| Desktop | Tablet | Mobile |
+|---|---|---|
+| ![About Desktop](docs/about-desktop.png) | ![About Tablet](docs/about-tablet.png) | ![About Mobile](docs/about-mobile.png) |
+
+### Products
+| Desktop | Tablet | Mobile |
+|---|---|---|
+| ![Products Desktop](docs/products-desktop.png) | ![Products Tablet](docs/products-tablet.png) | ![Products Mobile](docs/products-mobile.png) |
+
+### Enquiry
+| Desktop | Tablet | Mobile |
+|---|---|---|
+| ![Enquiry Desktop](docs/enquiry-desktop.png) | ![Enquiry Tablet](docs/enquiry-tablet.png) | ![Enquiry Mobile](docs/enquiry-mobile.png) |
+
+### Contact
+| Desktop | Tablet | Mobile |
+|---|---|---|
+| ![Contact Desktop](docs/contact-desktop.png) | ![Contact Tablet](docs/contact-tablet.png) | ![Contact Mobile](docs/contact-mobile.png) |
 
 *Part 3 (JavaScript functionality) will be added in a later submission.*
 
@@ -115,6 +151,15 @@ Shared across all five pages:
   adapt the navigation, hero, and image layouts for tablet and mobile screens.
 - **Part 2 — Responsive Images:** Added `srcset`/`sizes` to the homepage hero image to
   serve a smaller image on mobile devices.
+- **Part 2 — Design Tokens:** Refactored `style.css` to use CSS custom properties
+  (`:root` variables) for the colour palette, typography, and spacing, instead of
+  repeating hard-coded values throughout the file.
+- **Part 2 — Typography:** Added Google Fonts ("Playfair Display" for headings, "Lato"
+  for body text) in place of the default system font.
+- **Part 2 — Layout:** Converted the Products page gallery section to CSS Grid
+  (`grid-template-columns: repeat(auto-fit, minmax(...))`) for automatic responsive columns.
+- **Part 2 — Interactivity:** Extended interactive states to include `:focus-visible`
+  and `:active`, in addition to `:hover`, on navigation, buttons, and form fields.
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:

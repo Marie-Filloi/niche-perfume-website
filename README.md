@@ -126,40 +126,25 @@ Shared across all five pages:
 
 
 ## Changelog
-- **Part 1 — Planning:** Website Project Proposal drafted for Niche Perfumes, including
-  organisation overview, goals, KPIs, colour scheme, wireframes, timeline, and budget.
-- **Part 1 — Content Research:** Content Research and Sourcing package created, covering
-  original page copy and an image sourcing tracker.
-- **Part 1 — File Structure:** Project folder structure created (`css/`, `js/`, `images/` with
-  `home`, `about`, `products`, `enquiry`, `contact` subfolders).
-- **Part 1 — HTML:** Five HTML pages created and linked via shared navigation
-  (`index.html`, `about.html`, `products.html`, `enquiry.html`, `contact.html`).
-- **Part 1 — Images:** All images sourced from Pexels and integrated into the HTML; file format
-  and folder-path issues corrected; images without a valid free licence were removed and
-  replaced.
-- **Part 1 — Content Fixes:** Contact details updated; colour scheme documented with a swatch
-  table matching the coded palette.
 
-  - **Part 2 — CSS Styling:** Created external stylesheet and linked it to all five pages;
-  applied base styles, typography, and the brand colour palette across header, hero,
-  featured products, about, products, enquiry, and contact sections.
-- **Part 2 — Layout:** Implemented Flexbox layouts for navigation, hero section, product
-  grids, and the enquiry form.
-- **Part 2 — Interactivity:** Added hover and focus states on navigation links, buttons,
-  and form fields for better usability.
-- **Part 2 — Responsive Design:** Added media queries at 768px and 480px breakpoints to
-  adapt the navigation, hero, and image layouts for tablet and mobile screens.
-- **Part 2 — Responsive Images:** Added `srcset`/`sizes` to the homepage hero image to
-  serve a smaller image on mobile devices.
-- **Part 2 — Design Tokens:** Refactored `style.css` to use CSS custom properties
-  (`:root` variables) for the colour palette, typography, and spacing, instead of
-  repeating hard-coded values throughout the file.
-- **Part 2 — Typography:** Added Google Fonts ("Playfair Display" for headings, "Lato"
-  for body text) in place of the default system font.
-- **Part 2 — Layout:** Converted the Products page gallery section to CSS Grid
-  (`grid-template-columns: repeat(auto-fit, minmax(...))`) for automatic responsive columns.
-- **Part 2 — Interactivity:** Extended interactive states to include `:focus-visible`
-  and `:active`, in addition to `:hover`, on navigation, buttons, and form fields.
+| Date | Part | Category | Description |
+|---|---|---|---|
+| 13 August 2026 | Part 1 | Planning | Website Project Proposal drafted for Niche Perfumes, including organisation overview, goals, KPIs, colour scheme, wireframes, timeline, and budget. |
+| 13 August 2026 | Part 1 | Content Research | Content Research and Sourcing package created, covering original page copy and an image sourcing tracker. |
+| 13 August 2026 | Part 1 | File Structure | Project folder structure created (`css/`, `js/`, `images/` with `home`, `about`, `products`, `enquiry`, `contact` subfolders). |
+| 13 August 2026 | Part 1 | HTML | Five HTML pages created and linked via shared navigation (`index.html`, `about.html`, `products.html`, `enquiry.html`, `contact.html`). |
+| 13 August 2026 | Part 1 | Images | All images sourced from Pexels and integrated into the HTML; file format and folder-path issues corrected; images without a valid free licence were removed and replaced. |
+| 13 August 2026 | Part 1 | Content Fixes | Contact details updated; colour scheme documented with a swatch table matching the coded palette. |
+| 25 August 2026 | Part 2 | CSS Styling | Created external stylesheet (`css/style.css`) and linked it to all five pages; applied base styles, typography, and the brand colour palette across header, hero, featured products, about, products, enquiry, and contact sections. |
+| 25 August 2026 | Part 2 | Layout | Implemented Flexbox layouts for navigation, hero section, product grids, and the enquiry form. |
+| 25 August 2026 | Part 2 | Interactivity | Added hover and focus states on navigation links, buttons, and form fields for better usability. |
+| 25 August 2026 | Part 2 | Responsive Design | Added media queries at 768px and 480px breakpoints to adapt the navigation, hero, and image layouts for tablet and mobile screens. |
+| 25 August 2026 | Part 2 | Responsive Images | Added `srcset`/`sizes` to the homepage hero image to serve a smaller image on mobile devices. |
+| 17 September 2026 | Part 2 | Design Tokens | Refactored `style.css` to use CSS custom properties (`:root` variables) for the colour palette, typography, and spacing, instead of repeating hard-coded values throughout the file. |
+| 17 September 2026 | Part 2 | Typography | Added Google Fonts ("Playfair Display" for headings, "Lato" for body text) in place of the default system font. |
+| 17 September 2026 | Part 2 | Layout | Converted the Products page gallery section to CSS Grid (`grid-template-columns: repeat(auto-fit, minmax(...))`) for automatic responsive columns. |
+| 17 September 2026 | Part 2 | Interactivity | Extended interactive states to include `:focus-visible` and `:active`, in addition to `:hover`, on navigation, buttons, and form fields. |
+| 17 September 2026 | Part 2 | Testing | Captured responsive screenshots (Desktop 1440px, Tablet 768px, Mobile 375px) for all five pages using Chrome DevTools' device toolbar. |
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:

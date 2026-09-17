@@ -230,6 +230,10 @@ in warm ambient lighting*. [Photograph]. Pexels. Available at:
 https://www.pexels.com/photo/woman-shopping-at-perfume-kiosk-in-mall-34990739/ (Accessed: 13
 August 2026).
 
-### Tools Used
+### Tools and Resources Used (Part 2)
 
-I Love IMG (2026) *Resize Image*. Available at: https://www.iloveimg.com/resize-image (Accessed: 27 August 2026).
+Google Fonts (2026) *Playfair Display*. Available at: https://fonts.google.com/specimen/Playfair+Display (Accessed: 17 September 2026).
+
+Google Fonts (2026) *Lato*. Available at: https://fonts.google.com/specimen/Lato (Accessed: 17 September 2026).
+
+I Love IMG (2026) *Resize Image*. Available at: https://www.iloveimg.com/resize-image (Accessed: 13 August 2026).

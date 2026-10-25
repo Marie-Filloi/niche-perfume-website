@@ -8,18 +8,22 @@
 </head>
 <body>
 
-    <header>
-        <h1>Niche Perfumes</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="enquiry.html">Enquiry</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+   <header>
+    <h1>Niche Perfumes</h1>
+    <!-- Hamburger button: only visible on small screens (see CSS) -->
+    <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+        &#9776;
+    </button>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="enquiry.html">Enquiry</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
 
     <main>
         <section class="enquiry-form" style="background-image: url('images/enquiry/enquiry-bg.jpg'); background-size: cover; background-position: center; padding: 40px;">
@@ -57,5 +61,6 @@
         <p>&copy; 2026 Niche Perfumes. All rights reserved.</p>
     </footer>
 
+        <script src="js/main.js"></script>
 </body>
 </html>

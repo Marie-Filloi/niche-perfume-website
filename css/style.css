@@ -24,6 +24,17 @@
     --radius-md: 0.4rem;
 
     --transition: 0.3s ease;
+
+    /* Type scale: every font-size in the site uses these tokens.
+       The heading sizes are redefined in the media queries below,
+       so the whole type scale shrinks on tablet and mobile. */
+    --font-size-sm: 0.85rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.1rem;
+    --font-size-h3: 1.4rem;
+    --font-size-h2: 2rem;
+    --font-size-hero: 2.2rem;
+    --font-size-logo: 1.8rem;
 }
 
 /* ===== RESET & BASE STYLES ===== */
@@ -38,6 +49,7 @@ body {
     font-weight: 400;
     background-color: var(--color-ivory);
     color: var(--color-black);
+    font-size: var(--font-size-base);
     line-height: 1.6;
 }
 
@@ -73,7 +85,7 @@ header {
 
 header h1 {
     color: var(--color-gold);
-    font-size: 1.8rem;
+    font-size: var(--font-size-logo);
     letter-spacing: 1px;
 }
 
@@ -87,7 +99,7 @@ nav ul {
 nav a {
     color: var(--color-ivory);
     font-weight: 400;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     letter-spacing: 0.5px;
     transition: color var(--transition);
     padding: 4px 2px;
@@ -119,14 +131,14 @@ nav a:active {
 }
 
 .hero h2 {
-    font-size: 2.2rem;
+    font-size: var(--font-size-hero);
     color: var(--color-black);
     margin-bottom: var(--spacing-sm);
     letter-spacing: 0.5px;
 }
 
 .hero p {
-    font-size: 1.1rem;
+    font-size: var(--font-size-lg);
     font-weight: 400;
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-md);
@@ -139,7 +151,7 @@ nav a:active {
     color: var(--color-gold);
     font-weight: 700;
     padding: 0.9rem 2.25rem;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     letter-spacing: 1px;
     text-transform: uppercase;
     border-radius: 0.15rem;
@@ -169,7 +181,7 @@ nav a:active {
 }
 
 .featured-products h3 {
-    font-size: 1.6rem;
+    font-size: var(--font-size-h3);
     margin-bottom: 2.2rem;
     color: var(--color-black);
 }
@@ -199,7 +211,7 @@ nav a:active {
 
 .product-preview p {
     max-width: 280px;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     font-weight: 400;
     color: var(--color-text-muted);
 }
@@ -210,7 +222,7 @@ footer {
     color: var(--color-ivory);
     text-align: center;
     padding: var(--spacing-md) 1.25rem;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     letter-spacing: 0.5px;
     margin-top: var(--spacing-lg);
 }
@@ -224,7 +236,7 @@ footer {
 }
 
 .about-content h2 {
-    font-size: 2rem;
+    font-size: var(--font-size-h2);
     color: var(--color-black);
     margin-bottom: var(--spacing-md);
     text-align: center;
@@ -239,14 +251,14 @@ footer {
 }
 
 .about-content h3 {
-    font-size: 1.3rem;
+    font-size: var(--font-size-h3);
     color: var(--color-gold);
     margin-top: 1.9rem;
     margin-bottom: 0.6rem;
 }
 
 .about-content p {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     font-weight: 400;
     color: var(--color-text);
     margin-bottom: var(--spacing-sm);
@@ -262,7 +274,7 @@ footer {
 }
 
 .products-intro h2 {
-    font-size: 2rem;
+    font-size: var(--font-size-h2);
     color: var(--color-black);
     margin-bottom: var(--spacing-sm);
 }
@@ -282,7 +294,7 @@ footer {
 }
 
 .scent-family h3 {
-    font-size: 1.4rem;
+    font-size: var(--font-size-h3);
     color: var(--color-gold);
     margin-bottom: var(--spacing-sm);
 }
@@ -307,7 +319,7 @@ footer {
     background-color: var(--color-gold);
     color: var(--color-black);
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     padding: 0.4rem 1rem;
     border-radius: var(--radius-sm);
     margin-top: 0.8rem;
@@ -321,13 +333,13 @@ footer {
     padding: var(--spacing-lg) 1.25rem;
     text-align: center;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.25rem;
 }
 
 .more-collection h3 {
     grid-column: 1 / -1;
-    font-size: 1.4rem;
+    font-size: var(--font-size-h3);
     color: var(--color-black);
     margin-bottom: var(--spacing-md);
 }
@@ -350,7 +362,7 @@ footer {
     background-color: var(--color-gold);
     color: var(--color-black);
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     padding: 0.4rem 1rem;
     border-radius: var(--radius-sm);
     margin-top: 0.8rem;
@@ -365,7 +377,7 @@ footer {
 }
 
 .enquiry-form h2 {
-    font-size: 2rem;
+    font-size: var(--font-size-h2);
     color: var(--color-black);
     margin-bottom: var(--spacing-sm);
 }
@@ -386,7 +398,7 @@ footer {
 
 .enquiry-form label {
     display: block;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     font-weight: 700;
     color: var(--color-black);
     margin-top: 1.1rem;
@@ -402,7 +414,7 @@ footer {
     border-radius: var(--radius-sm);
     font-family: inherit;
     font-weight: 400;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base);
     transition: border-color var(--transition);
 }
 
@@ -423,7 +435,7 @@ footer {
     margin-top: var(--spacing-sm);
     border: none;
     border-radius: var(--radius-sm);
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
@@ -445,7 +457,7 @@ footer {
     text-align: center;
     color: var(--color-grey);
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     margin-top: var(--spacing-sm);
 }
 
@@ -459,7 +471,7 @@ footer {
 }
 
 .contact-info h2 {
-    font-size: 2rem;
+    font-size: var(--font-size-h2);
     color: var(--color-black);
     margin-bottom: var(--spacing-sm);
 }
@@ -478,7 +490,7 @@ footer {
 
 .contact-details li {
     padding: 0.5rem 0;
-    font-size: 1rem;
+    font-size: var(--font-size-base);
     font-weight: 400;
     color: var(--color-text);
 }
@@ -511,7 +523,7 @@ footer {
 }
 
 .map-section h3 {
-    font-size: 1.4rem;
+    font-size: var(--font-size-h3);
     color: var(--color-black);
     margin-bottom: 1.25rem;
 }
@@ -524,8 +536,16 @@ footer {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== RESPONSIVE - TABLET & MOBILE ===== */
+/* ===== RESPONSIVE - TABLET (768px and below) ===== */
 @media (max-width: 768px) {
+    /* Smaller type scale for tablet: all headings update automatically */
+    :root {
+        --font-size-h3: 1.25rem;
+        --font-size-h2: 1.7rem;
+        --font-size-hero: 1.6rem;
+        --font-size-logo: 1.6rem;
+    }
+
     header {
         flex-direction: column;
         align-items: flex-start;
@@ -545,10 +565,6 @@ footer {
         max-width: 100%;
     }
 
-    .hero h2 {
-        font-size: 1.6rem;
-    }
-
     .product-preview {
         flex-direction: column;
     }
@@ -559,13 +575,14 @@ footer {
     }
 }
 
+/* ===== RESPONSIVE - MOBILE (480px and below) ===== */
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 1.4rem;
-    }
-
-    .hero h2 {
-        font-size: 1.3rem;
+    /* Smallest type scale for mobile */
+    :root {
+        --font-size-h3: 1.15rem;
+        --font-size-h2: 1.5rem;
+        --font-size-hero: 1.3rem;
+        --font-size-logo: 1.4rem;
     }
 
     nav ul {

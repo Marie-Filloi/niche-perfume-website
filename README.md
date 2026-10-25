@@ -134,6 +134,11 @@ logged in the Changelog below.
 - **Mobile navigation toggle:** on screens 768px and below, the menu is hidden behind a
   hamburger button. Clicking it adds or removes the `is-open` class on the `<nav>` and updates
   `aria-expanded`, so screen readers know whether the menu is open.
+  - **Product image lightbox:** on `products.html`, clicking any product or gallery image opens
+  the 800px version in a full-screen overlay with a caption. The overlay is created with
+  JavaScript (DOM manipulation: `createElement`, `append`, `classList`). It can be closed with
+  the × button, a click outside the image, or the Escape key, and it also works with the keyboard
+  (Tab to an image, then Enter).
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -173,7 +178,7 @@ Shared across all five pages:
 | 25 October 2026 | Part 3 | Layout | Fixed the "More From Our Collection" grid on `products.html`: `minmax(200px, 1fr)` created an empty fourth column and pushed the 3 items to the left, so it was changed to `minmax(250px, 1fr)` to centre them. |
 | 25 October 2026 | Part 3 | HTML Fixes | Restored the missing closing `</main>`, footer, `</body>`, and `</html>` tags at the end of `products.html`, and removed a stray `</section>` tag in `index.html`. |
 | 25 October 2026 | Part 3 | Documentation | Updated the README: project title and overview now cover all three parts, Part 2 Details corrected (responsive images and font-size tokens), and a new Part 3 Details section added. |
-
+| 25 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a lightbox gallery to `products.html`: clicking any of the 8 product images opens its 800px version in a full-screen overlay with a caption. The overlay is built with DOM manipulation in `js/main.js`, closes with the × button, an outside click, or the Escape key, and is keyboard accessible (`tabindex`, `aria-modal`, focus returned to the image on close). Styled in `style.css` with a fade-in and zoom transition. |
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13

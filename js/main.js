@@ -107,3 +107,28 @@ if (galleryImages.length > 0) {
         }
     });
 }
+
+/* ===== FAQ ACCORDION (about page) =====
+   Clicking a question opens its answer and closes the others,
+   so only one answer is open at a time. */
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(function (item) {
+    const question = item.querySelector('.faq-question');
+
+    question.addEventListener('click', function () {
+        const wasOpen = item.classList.contains('is-open');
+
+        // Close every item first
+        faqItems.forEach(function (otherItem) {
+            otherItem.classList.remove('is-open');
+            otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+
+        // Then open the clicked item (unless it was already open, so a second click closes it)
+        if (!wasOpen) {
+            item.classList.add('is-open');
+            question.setAttribute('aria-expanded', 'true');
+        }
+    });
+});

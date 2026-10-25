@@ -139,6 +139,12 @@ logged in the Changelog below.
   JavaScript (DOM manipulation: `createElement`, `append`, `classList`). It can be closed with
   the × button, a click outside the image, or the Escape key, and it also works with the keyboard
   (Tab to an image, then Enter).
+  - **FAQ accordion:** on `about.html`, six frequently asked questions (authenticity, delivery,
+  gift wrapping, returns, choosing a scent for the weather and the perfume types, and sensitive
+  skin). Clicking a question opens its answer and closes the others, so only one is open at a
+  time. The answers slide open with a CSS transition (`grid-template-rows` from `0fr` to `1fr`),
+  and the gold "+" icon rotates into an "×". Each question is a `<button>` with `aria-expanded`
+  and `aria-controls`, so the accordion works with a keyboard and screen readers.
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -179,6 +185,7 @@ Shared across all five pages:
 | 25 October 2026 | Part 3 | HTML Fixes | Restored the missing closing `</main>`, footer, `</body>`, and `</html>` tags at the end of `products.html`, and removed a stray `</section>` tag in `index.html`. |
 | 25 October 2026 | Part 3 | Documentation | Updated the README: project title and overview now cover all three parts, Part 2 Details corrected (responsive images and font-size tokens), and a new Part 3 Details section added. |
 | 25 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a lightbox gallery to `products.html`: clicking any of the 8 product images opens its 800px version in a full-screen overlay with a caption. The overlay is built with DOM manipulation in `js/main.js`, closes with the × button, an outside click, or the Escape key, and is keyboard accessible (`tabindex`, `aria-modal`, focus returned to the image on close). Styled in `style.css` with a fade-in and zoom transition. |
+| 26 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a FAQ accordion to `about.html` with six questions (authenticity, delivery in Cape Town, gift wrapping, 72-hour returns policy with till slip and no refunds, choosing a scent for the weather including perfume concentration types, and tips for skin sensitive to alcohol). Styled in an editorial luxury look (numbered questions, thin gold lines, rotating "+" icon, smooth slide animation) and made accessible with `<button>`, `aria-expanded`, `aria-controls`, and `role="region"`. The answers include internal links to `products.html` and `enquiry.html` for SEO. |
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13

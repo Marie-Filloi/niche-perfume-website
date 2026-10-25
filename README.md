@@ -1,7 +1,7 @@
 # Niche Perfumes — Website Project
 
 ## Project Title
-Niche Perfumes Website — Part 1: Building the Foundation
+Niche Perfumes Website — WEDE5020 Portfolio of Evidence (Parts 1 to 3)
 
 ## Student Information
 - **Name:** Filloi Marie Antoinette
@@ -16,9 +16,12 @@ online presence, this project builds the business's first digital presence from 
 a five-page website introducing the brand, showcasing its fragrance catalogue, and giving
 customers a way to make enquiries.
 
-This repository currently contains **Part 1: Building the Foundation** — project planning, content
-research, and the initial HTML structure for all five pages. Part 2 (CSS styling) and Part 3
-(JavaScript functionality) will follow in future submissions.
+This repository contains the full project across three parts:
+- **Part 1: Building the Foundation** — project planning, content research, and the HTML structure
+  for all five pages.
+- **Part 2: Designing the Visuals** — CSS styling and responsive design.
+- **Part 3: Enhancing Functionality and SEO** — corrections from the Part 2 feedback, JavaScript
+  functionality, form validation, SEO, and deployment (in progress).
 
 ## Website Goals and Objectives
 - Increase online visibility and generate direct sales enquiries.
@@ -69,7 +72,7 @@ Part 1 covers project planning and the foundational HTML structure:
 Part 2 covers CSS styling and responsive design:
 - External stylesheet (`css/style.css`) linked to all five HTML pages
 - Design-token system using CSS custom properties (`:root` variables) for colours,
-  typography, spacing, and border-radius, so the whole site can be restyled from one place
+  typography, font sizes, spacing, and border-radius, so the whole site can be restyled from one place
 - Custom typography pairing via Google Fonts: "Playfair Display" for headings, "Lato" for body text
 - Base styles (reset, typography, colour scheme) applied consistently across the site
 - Layout structure built with Flexbox (header/nav, hero, product previews, forms) and
@@ -78,8 +81,9 @@ Part 2 covers CSS styling and responsive design:
 - Interactive states added with `:hover`, `:focus-visible`, and `:active` pseudo-classes
   (navigation links, buttons, form fields, product images)
 - Responsive design implemented with media queries at 768px and 480px breakpoints
-- Responsive image (`srcset`/`sizes`) added to the homepage hero image, serving a smaller
-  image on mobile screens
+- Responsive images: a `<picture>` element on the homepage hero image, and `srcset`/`sizes`
+  on all product and gallery images (extended to the product images after the Part 2 feedback,
+  see below)
 - Tested using browser developer tools across multiple screen sizes: 375px (mobile),
   400px (mobile), 768px (tablet), 1024px, and 1440px (desktop)
   
@@ -112,7 +116,24 @@ Desktop (1440px), Tablet (768px), and Mobile (375px).
 |---|---|---|
 | ![Contact Desktop](docs/contact-desktop.png) | ![Contact Tablet](docs/contact-tablet.png) | ![Contact Mobile](docs/contact-mobile.png) |
 
-*Part 3 (JavaScript functionality) will be added in a later submission.*
+## Part 3 Details
+Part 3 covers functionality, forms, SEO, and deployment. Completed so far:
+
+### Corrections from Part 2 Feedback
+The lecturer's feedback for Part 2 asked for three changes. Each one has been completed and is
+logged in the Changelog below.
+
+| Feedback | What was changed |
+|---|---|
+| Extend `srcset` and `sizes` to the product and gallery images (only the hero was responsive). | All 8 product and gallery images on `products.html` now use `srcset` and `sizes`. A 400px version (`images/products/small/`) and an 800px version (`images/products/medium/`) of each image were created, so the browser downloads the smallest suitable file (about 55–135 KB instead of 1.5 MB). |
+| Remove the hard-coded `width` attributes from `<img>` tags. | Removed every `width="..."` attribute from the `<img>` tags in `index.html`, `about.html`, `contact.html`, and `products.html`. Image sizes are now controlled only by the CSS. |
+| Move font-size scaling into the design tokens, and add a proper mobile nav toggle. | Every `font-size` in `style.css` now uses a token (`--font-size-sm` to `--font-size-logo`). The heading tokens are redefined inside the 768px and 480px media queries, so the type scale cascades automatically. A hamburger menu (☰) was added to all five pages for tablet and mobile, controlled by `js/main.js`. |
+
+### JavaScript
+- `js/main.js` — shared script linked on all five pages.
+- **Mobile navigation toggle:** on screens 768px and below, the menu is hidden behind a
+  hamburger button. Clicking it adds or removes the `is-open` class on the `<nav>` and updates
+  `aria-expanded`, so screen readers know whether the menu is open.
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -145,6 +166,13 @@ Shared across all five pages:
 | 17 September 2026 | Part 2 | Layout | Converted the Products page gallery section to CSS Grid (`grid-template-columns: repeat(auto-fit, minmax(...))`) for automatic responsive columns. |
 | 17 September 2026 | Part 2 | Interactivity | Extended interactive states to include `:focus-visible` and `:active`, in addition to `:hover`, on navigation, buttons, and form fields. |
 | 17 September 2026 | Part 2 | Testing | Captured responsive screenshots (Desktop 1440px, Tablet 768px, Mobile 375px) for all five pages using Chrome DevTools' device toolbar. |
+| 25 October 2026 | Part 3 (Part 2 feedback) | HTML / Images | Removed the hard-coded `width` attributes from all `<img>` tags in `index.html`, `about.html`, `contact.html`, and `products.html`, so they no longer conflict with the CSS sizing rules. |
+| 25 October 2026 | Part 3 (Part 2 feedback) | Responsive Images | Added `srcset` and `sizes` to all 8 product and gallery images on `products.html`. Created 400px (`images/products/small/`) and 800px (`images/products/medium/`) versions of each image with I Love IMG, reducing each download from about 1.5 MB to under 135 KB. |
+| 25 October 2026 | Part 3 (Part 2 feedback) | Typography / Design Tokens | Added a type scale to `:root` (`--font-size-sm`, `--font-size-base`, `--font-size-lg`, `--font-size-h3`, `--font-size-h2`, `--font-size-hero`, `--font-size-logo`) and replaced every hard-coded `font-size` in `style.css` with these tokens. The heading tokens are redefined in the 768px and 480px media queries, and the old per-selector font-size overrides were removed. |
+| 25 October 2026 | Part 3 (Part 2 feedback) | Navigation / JavaScript | Added an accessible hamburger menu (☰) to all five pages for screens 768px and below. Created `js/main.js`, which toggles the `is-open` class on the `<nav>` and updates `aria-expanded`. Styled the button with the brand colours and `:hover`, `:focus-visible`, and `:active` states. |
+| 25 October 2026 | Part 3 | Layout | Fixed the "More From Our Collection" grid on `products.html`: `minmax(200px, 1fr)` created an empty fourth column and pushed the 3 items to the left, so it was changed to `minmax(250px, 1fr)` to centre them. |
+| 25 October 2026 | Part 3 | HTML Fixes | Restored the missing closing `</main>`, footer, `</body>`, and `</html>` tags at the end of `products.html`, and removed a stray `</section>` tag in `index.html`. |
+| 25 October 2026 | Part 3 | Documentation | Updated the README: project title and overview now cover all three parts, Part 2 Details corrected (responsive images and font-size tokens), and a new Part 3 Details section added. |
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
@@ -237,3 +265,13 @@ Google Fonts (2026) *Playfair Display*. Available at: https://fonts.google.com/s
 Google Fonts (2026) *Lato*. Available at: https://fonts.google.com/specimen/Lato (Accessed: 17 September 2026).
 
 I Love IMG (2026) *Resize Image*. Available at: https://www.iloveimg.com/resize-image (Accessed: 13 August 2026).
+
+### Tools and Resources Used (Part 3)
+
+I Love IMG (2026) *Resize Image*. Available at: https://www.iloveimg.com/resize-image (Accessed: 25 October 2026).
+
+MDN Web Docs (2026) *&lt;img&gt;: The Image Embed element* (`srcset` and `sizes` attributes). Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img (Accessed: 25 October 2026).
+
+MDN Web Docs (2026) *Element: classList property*. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList (Accessed: 25 October 2026).
+
+MDN Web Docs (2026) *aria-expanded*. Available at: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded (Accessed: 25 October 2026).

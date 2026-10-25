@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Niche Perfumes - Contact</title>
+    
+           <!-- Leaflet library (interactive map) -->
+       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -42,24 +45,37 @@
             </div>
         </section>
 
-        <section class="map-section">
+               <section class="map-section">
             <h3>Find Us</h3>
-            <!-- Map will be embedded here -->
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13251.0!2d18.4232!3d-33.9249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDU1JzI5LjYiUyAxOMKwMjUnMjMuNSJF!5e0!3m2!1sen!2sza!4v1600000000000"
-                width="100%"
-                height="400"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy">
-            </iframe>
+            <p class="map-intro">Visit our flagship store in the Cape Town CBD, or our new boutique opening soon at the V&amp;A Waterfront.</p>
+
+            <!-- Interactive Leaflet map: built by js/main.js -->
+            <div id="store-map" class="store-map" role="region" aria-label="Interactive map of Niche Perfumes store locations"></div>
+
+            <!-- Store cards: each button moves the map to that store -->
+            <div class="store-list">
+                <article class="store-card">
+                    <span class="store-label">Flagship Store</span>
+                    <h4>Cape Town CBD</h4>
+                    <p>Long Street, Cape Town CBD, 8001</p>
+                    <p>Mon–Fri 09:00–18:00 · Sat 09:00–15:00</p>
+                    <button class="store-button" data-store="cbd">Show on map</button>
+                </article>
+                <article class="store-card">
+                    <span class="store-label">Opening Soon</span>
+                    <h4>V&amp;A Waterfront</h4>
+                    <p>Victoria Wharf Shopping Centre, V&amp;A Waterfront, 8001</p>
+                    <p>Opening in 2027</p>
+                    <button class="store-button" data-store="waterfront">Show on map</button>
+                </article>
+            </div>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2026 Niche Perfumes. All rights reserved.</p>
     </footer>
-
+       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script src="js/main.js"></script>
 </body>
 </html>

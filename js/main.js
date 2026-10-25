@@ -132,3 +132,73 @@ faqItems.forEach(function (item) {
         }
     });
 });
+
+/* ===== INTERACTIVE STORE MAP (contact page, Leaflet) =====
+   Uses the Leaflet library (loaded in contact.html) to show
+   both store locations with gold markers and popups. */
+const mapElement = document.getElementById('store-map');
+
+if (mapElement && typeof L !== 'undefined') {
+    // 1. Store details: name, address, opening hours and map position
+    const stores = {
+        cbd: {
+            name: 'Niche Perfumes — Cape Town CBD',
+            address: 'Long Street, Cape Town CBD, 8001',
+            hours: 'Mon–Fri 09:00–18:00 · Sat 09:00–15:00',
+            coords: [-33.9225, 18.4177]
+        },
+        waterfront: {
+            name: 'Niche Perfumes — V&A Waterfront',
+            address: 'Victoria Wharf Shopping Centre, V&A Waterfront, 8001',
+            hours: 'Opening in 2027',
+            coords: [-33.9030, 18.4206]
+        }
+    };
+
+    // 2. Create the map (scroll-wheel zoom is off so the page scrolls normally)
+    const map = L.map('store-map', { scrollWheelZoom: false });
+
+        // 3. Elegant light grey map style (Esri World Light Gray Canvas, free with attribution)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16
+    }).addTo(map);
+
+    // 4. Custom gold marker, styled in style.css (.gold-marker)
+    const goldIcon = L.divIcon({
+        className: 'gold-marker',
+        html: '<span></span>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11],
+        popupAnchor: [0, -14]
+    });
+
+    // 5. Add one marker and popup per store
+    const markers = {};
+
+    Object.keys(stores).forEach(function (key) {
+        const store = stores[key];
+
+        markers[key] = L.marker(store.coords, { icon: goldIcon, title: store.name, alt: store.name })
+            .addTo(map)
+            .bindPopup('<strong>' + store.name + '</strong><br>' + store.address + '<br>' + store.hours);
+    });
+
+    // 6. Zoom so that both stores are visible
+    map.fitBounds([stores.cbd.coords, stores.waterfront.coords], { padding: [60, 60] });
+
+    // 7. "Show on map" buttons: fly to the store and open its popup
+    document.querySelectorAll('.store-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const key = button.dataset.store;
+
+            map.flyTo(stores[key].coords, 16, { duration: 1 });
+
+            // Open the popup once the map has finished moving
+            map.once('moveend', function () {
+                markers[key].openPopup();
+            });
+            mapElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    });
+}

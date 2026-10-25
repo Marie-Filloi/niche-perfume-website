@@ -145,6 +145,11 @@ logged in the Changelog below.
   time. The answers slide open with a CSS transition (`grid-template-rows` from `0fr` to `1fr`),
   and the gold "+" icon rotates into an "×". Each question is a `<button>` with `aria-expanded`
   and `aria-controls`, so the accordion works with a keyboard and screen readers.
+  - **Interactive store map:** on `contact.html`, the static Google Maps embed was replaced with an
+  interactive map built with the Leaflet library. It shows both store locations (the Cape Town CBD
+  flagship store and the V&A Waterfront boutique opening in 2027) with custom gold markers and
+  popups showing the address and opening hours. Each store card below the map has a "Show on map"
+  button that flies the map to that store and opens its popup.
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -186,6 +191,7 @@ Shared across all five pages:
 | 25 October 2026 | Part 3 | Documentation | Updated the README: project title and overview now cover all three parts, Part 2 Details corrected (responsive images and font-size tokens), and a new Part 3 Details section added. |
 | 25 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a lightbox gallery to `products.html`: clicking any of the 8 product images opens its 800px version in a full-screen overlay with a caption. The overlay is built with DOM manipulation in `js/main.js`, closes with the × button, an outside click, or the Escape key, and is keyboard accessible (`tabindex`, `aria-modal`, focus returned to the image on close). Styled in `style.css` with a fade-in and zoom transition. |
 | 26 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a FAQ accordion to `about.html` with six questions (authenticity, delivery in Cape Town, gift wrapping, 72-hour returns policy with till slip and no refunds, choosing a scent for the weather including perfume concentration types, and tips for skin sensitive to alcohol). Styled in an editorial luxury look (numbered questions, thin gold lines, rotating "+" icon, smooth slide animation) and made accessible with `<button>`, `aria-expanded`, `aria-controls`, and `role="region"`. The answers include internal links to `products.html` and `enquiry.html` for SEO. |
+| 26 October 2026 | Part 3 | Interactive Map / JavaScript | Replaced the Google Maps `<iframe>` on `contact.html` with an interactive Leaflet map showing two locations: the Cape Town CBD flagship store (Long Street) and the planned V&A Waterfront boutique (Victoria Wharf). Added custom gold markers (`L.divIcon`), popups with the address and opening hours, two store cards with "Show on map" buttons (`flyTo` animation), and a light grey Esri basemap to match the brand palette. Leaflet is loaded from a CDN with Subresource Integrity (`integrity` and `crossorigin`) for security. The first basemap tried (CARTO) required an API key, so it was replaced with the free Esri World Light Gray Canvas. |
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13
@@ -287,3 +293,7 @@ MDN Web Docs (2026) *&lt;img&gt;: The Image Embed element* (`srcset` and `sizes`
 MDN Web Docs (2026) *Element: classList property*. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Element/classList (Accessed: 25 October 2026).
 
 MDN Web Docs (2026) *aria-expanded*. Available at: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-expanded (Accessed: 25 October 2026).
+
+Leaflet (2023) *Leaflet 1.9.4: an open-source JavaScript library for interactive maps*. Available at: https://leafletjs.com/ (Accessed: 26 October 2026).
+
+Esri (2026) *World Light Gray Canvas Base* [Map tiles]. Available at: https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer (Accessed: 26 October 2026).

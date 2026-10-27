@@ -28,30 +28,70 @@
     <main>
         <section class="enquiry-form" style="background-image: url('images/enquiry/enquiry-bg.jpg'); background-size: cover; background-position: center; padding: 40px;">
             <h2>Get in Touch</h2>
-            <p>Have a question about a fragrance, or want a personalised recommendation? Send us an enquiry and we'll get back to you.</p>
+            <p>Have a question about a fragrance, or want a personalised recommendation? Send us an enquiry and we'll reply straight away with the price and availability.</p>
 
-            <form action="#" method="post">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" name="fullname" required>
+            <!-- novalidate: JavaScript (js/main.js) shows our own error messages instead of the browser's -->
+            <form id="enquiry-form" action="https://jsonplaceholder.typicode.com/posts" method="post" novalidate>
+                <p class="form-hint">Fields marked * are required.</p>
 
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
+                <label for="fullname">Full Name *</label>
+                <input type="text" id="fullname" name="fullname" required minlength="2" maxlength="60" autocomplete="name">
+                <p class="field-error" id="fullname-error" aria-live="polite"></p>
+
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required maxlength="100" autocomplete="email">
+                <p class="field-error" id="email-error" aria-live="polite"></p>
 
                 <label for="phone">Phone Number (optional)</label>
-                <input type="tel" id="phone" name="phone">
+                <input type="tel" id="phone" name="phone" placeholder="e.g. 081 301 0574" autocomplete="tel">
+                <p class="field-error" id="phone-error" aria-live="polite"></p>
 
-                <label for="enquiry-type">Enquiry Type</label>
-                <select id="enquiry-type" name="enquiry-type">
-                    <option value="product">Product Question</option>
-                    <option value="stockist">Stockist Enquiry</option>
+                <label for="enquiry-type">Enquiry Type *</label>
+                <select id="enquiry-type" name="enquiry-type" required>
+                    <option value="">Choose an enquiry type</option>
+                    <option value="availability">Price and availability</option>
+                    <option value="gift">Gift set or corporate order</option>
+                    <option value="stockist">Stockist or partnership enquiry</option>
                     <option value="other">Other</option>
                 </select>
+                <p class="field-error" id="enquiry-type-error" aria-live="polite"></p>
 
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
+                <!-- Only shown for "Price and availability" and "Gift set or corporate order" -->
+                <div id="product-fields" class="product-fields" hidden>
+                    <label for="fragrance">Fragrance *</label>
+                    <select id="fragrance" name="fragrance">
+                        <option value="">Choose a fragrance</option>
+                        <option value="Woody Collection">Woody Collection (from R650)</option>
+                        <option value="Floral Collection">Floral Collection (from R580)</option>
+                        <option value="Oriental / Amber Collection">Oriental / Amber Collection (from R720)</option>
+                        <option value="Fresh / Citrus Collection">Fresh / Citrus Collection (from R540)</option>
+                        <option value="Unisex Collection">Unisex Collection (from R690)</option>
+                        <option value="Luminous Floral">Luminous Floral (from R610)</option>
+                        <option value="Aquatic Fresh">Aquatic Fresh (from R670)</option>
+                        <option value="Classic Floral">Classic Floral (from R590)</option>
+                        <option value="not-sure">Not sure, please recommend one</option>
+                    </select>
+                    <p class="field-error" id="fragrance-error" aria-live="polite"></p>
 
-                <button type="submit">Send Enquiry</button>
+                    <label for="quantity">Quantity *</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="50" value="1">
+                    <p class="field-error" id="quantity-error" aria-live="polite"></p>
+
+                    <label for="needed-by">Needed By (optional)</label>
+                    <input type="date" id="needed-by" name="needed-by">
+                    <p class="field-error" id="needed-by-error" aria-live="polite"></p>
+                </div>
+
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="5" required minlength="20" maxlength="500"></textarea>
+                <p class="char-counter" id="message-counter">0 / 500 characters (minimum 20)</p>
+                <p class="field-error" id="message-error" aria-live="polite"></p>
+
+                <button type="submit" id="enquiry-submit">Send Enquiry</button>
             </form>
+
+            <!-- Filled in by js/main.js after the form is sent -->
+            <div id="enquiry-response" class="enquiry-response" tabindex="-1" hidden></div>
 
             <p class="note">We aim to respond within 1–2 business days.</p>
         </section>

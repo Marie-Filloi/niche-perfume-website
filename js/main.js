@@ -544,3 +544,341 @@ if (mapElement && typeof L !== 'undefined') {
         });
     });
 }
+
+/* ===== FORM VALIDATION HELPERS (enquiry and contact forms) =====
+   Each check returns an error message, or an empty string when the value is valid. */
+const namePattern = /^[A-Za-zÀ-ÿ' -]{2,60}$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const phonePattern = /^(\+27|0)[1-9][0-9]{8}$/; // South African numbers: 0XX XXX XXXX or +27 XX XXX XXXX
+
+function checkName(value) {
+    if (value === '') {
+        return 'Please enter your full name.';
+    }
+    if (!namePattern.test(value)) {
+        return 'Your name should be 2 to 60 letters (spaces, hyphens and apostrophes are allowed).';
+    }
+    return '';
+}
+
+function checkEmail(value) {
+    if (value === '') {
+        return 'Please enter your email address.';
+    }
+    if (!emailPattern.test(value)) {
+        return 'Please enter a valid email address, e.g. name@example.com.';
+    }
+    return '';
+}
+
+function checkPhone(value) {
+    const digits = value.replace(/[\s()-]/g, ''); // ignore spaces, brackets and dashes
+    if (digits === '') {
+        return ''; // the phone number is optional
+    }
+    if (!phonePattern.test(digits)) {
+        return 'Please enter a valid South African number, e.g. 081 301 0574 or +27 81 301 0574.';
+    }
+    return '';
+}
+
+function checkMessage(value, minLength, maxLength) {
+    if (value.length < minLength) {
+        return 'Your message must be at least ' + minLength + ' characters (currently ' + value.length + ').';
+    }
+    if (value.length > maxLength) {
+        return 'Your message must be ' + maxLength + ' characters or fewer.';
+    }
+    return '';
+}
+
+// Show or clear the error message under a field
+function showFieldError(field, message) {
+    const errorElement = document.getElementById(field.id + '-error');
+    errorElement.textContent = message;
+    field.classList.toggle('is-invalid', message !== '');
+    field.setAttribute('aria-invalid', message !== '');
+    if (message !== '') {
+        field.setAttribute('aria-describedby', errorElement.id);
+    } else {
+        field.removeAttribute('aria-describedby');
+    }
+    return message === '';
+}
+
+// Live character counter under a textarea
+function setUpCounter(textarea, counter, minLength, maxLength) {
+    function update() {
+        counter.textContent = textarea.value.length + ' / ' + maxLength + ' characters (minimum ' + minLength + ')';
+    }
+    textarea.addEventListener('input', update);
+    update();
+}
+
+/* ===== ENQUIRY FORM (enquiry page) =====
+   Validates the form, sends it with AJAX (fetch), and then shows the visitor
+   a response with the price, availability and delivery of the fragrance. */
+const enquiryForm = document.getElementById('enquiry-form');
+
+if (enquiryForm) {
+    // Prices and stock levels used to build the response
+    const catalogue = {
+        'Woody Collection': { price: 650, stock: 12 },
+        'Floral Collection': { price: 580, stock: 8 },
+        'Oriental / Amber Collection': { price: 720, stock: 3 },
+        'Fresh / Citrus Collection': { price: 540, stock: 15 },
+        'Unisex Collection': { price: 690, stock: 0 },
+        'Luminous Floral': { price: 610, stock: 5 },
+        'Aquatic Fresh': { price: 670, stock: 2 },
+        'Classic Floral': { price: 590, stock: 6 }
+    };
+
+    const FREE_DELIVERY_FROM = 1000; // free Cape Town delivery from R1000
+    const DELIVERY_FEE = 80;
+
+    const fields = {
+        name: document.getElementById('fullname'),
+        email: document.getElementById('email'),
+        phone: document.getElementById('phone'),
+        type: document.getElementById('enquiry-type'),
+        fragrance: document.getElementById('fragrance'),
+        quantity: document.getElementById('quantity'),
+        neededBy: document.getElementById('needed-by'),
+        message: document.getElementById('message')
+    };
+    const productFields = document.getElementById('product-fields');
+    const submitButton = document.getElementById('enquiry-submit');
+    const responseBox = document.getElementById('enquiry-response');
+
+    setUpCounter(fields.message, document.getElementById('message-counter'), 20, 500);
+
+    // The "Needed by" date cannot be in the past
+    const today = new Date().toISOString().split('T')[0];
+    fields.neededBy.min = today;
+
+    // Show the fragrance, quantity and date fields only when they are needed
+    function needsProduct() {
+        return fields.type.value === 'availability' || fields.type.value === 'gift';
+    }
+
+    function toggleProductFields() {
+        productFields.hidden = !needsProduct();
+    }
+
+    fields.type.addEventListener('change', toggleProductFields);
+
+    // If the visitor comes from the cart, add a "My cart" option and fill in the form
+    let cartItems = [];
+    try {
+        cartItems = JSON.parse(localStorage.getItem('nichePerfumesCart')) || [];
+    } catch (error) {
+        cartItems = [];
+    }
+
+    if (cartItems.length > 0) {
+        const cartOption = document.createElement('option');
+        cartOption.value = 'cart';
+        cartOption.textContent = 'My cart (' + cartItems.length + (cartItems.length === 1 ? ' fragrance)' : ' fragrances)');
+        fields.fragrance.insertBefore(cartOption, fields.fragrance.options[1]);
+
+        fields.type.value = 'availability';
+        fields.fragrance.value = 'cart';
+        fields.message.value = 'I would like to know the price and availability of the items in my cart: ' +
+            cartItems.map(function (item) {
+                return item.name + ' x ' + item.quantity;
+            }).join(', ') + '.';
+        fields.message.dispatchEvent(new Event('input')); // update the character counter
+        toggleProductFields();
+    }
+
+    // Validate one field at a time
+    const validators = {
+        name: function () { return showFieldError(fields.name, checkName(fields.name.value.trim())); },
+        email: function () { return showFieldError(fields.email, checkEmail(fields.email.value.trim())); },
+        phone: function () { return showFieldError(fields.phone, checkPhone(fields.phone.value.trim())); },
+        type: function () {
+            return showFieldError(fields.type, fields.type.value === '' ? 'Please choose an enquiry type.' : '');
+        },
+        fragrance: function () {
+            if (!needsProduct()) { return true; }
+            return showFieldError(fields.fragrance, fields.fragrance.value === '' ? 'Please choose a fragrance.' : '');
+        },
+        quantity: function () {
+            if (!needsProduct() || fields.fragrance.value === 'cart') { return true; }
+            const quantity = Number(fields.quantity.value);
+            const valid = Number.isInteger(quantity) && quantity >= 1 && quantity <= 50;
+            return showFieldError(fields.quantity, valid ? '' : 'Please enter a quantity between 1 and 50.');
+        },
+        neededBy: function () {
+            if (!needsProduct() || fields.neededBy.value === '') { return true; }
+            return showFieldError(fields.neededBy, fields.neededBy.value < today ? 'Please choose today or a future date.' : '');
+        },
+        message: function () {
+            return showFieldError(fields.message, checkMessage(fields.message.value.trim(), 20, 500));
+        }
+    };
+
+    // Check each field when the visitor leaves it
+    Object.keys(validators).forEach(function (key) {
+        fields[key].addEventListener('blur', validators[key]);
+    });
+
+    // Format a number as Rand, e.g. R1 300
+    function rand(amount) {
+        return 'R' + amount.toLocaleString('en-ZA');
+    }
+
+    // Work out the response for one fragrance
+    function availabilityText(name, quantity) {
+        const stock = catalogue[name].stock;
+        if (stock >= quantity) {
+            return 'In stock: ready for collection at our Cape Town CBD store within 24 hours, or delivered in Cape Town within 1–3 business days.';
+        }
+        if (stock > 0) {
+            return 'Only ' + stock + ' available now. The remaining ' + (quantity - stock) + ' can be ordered in 7–10 business days.';
+        }
+        return 'Currently out of stock. Available to pre-order, with delivery in 7–10 business days.';
+    }
+
+    // Build the response with createElement and textContent (never innerHTML with
+    // visitor input), so nothing typed in the form can run as code on the page.
+    function addLine(parent, tag, text, className) {
+        const element = document.createElement(tag);
+        element.textContent = text;
+        if (className) {
+            element.className = className;
+        }
+        parent.appendChild(element);
+        return element;
+    }
+
+    function showResponse(data, referenceNumber, sentOnline) {
+        responseBox.innerHTML = '';
+        const firstName = data.name.split(' ')[0];
+
+        addLine(responseBox, 'h3', 'Thank you, ' + firstName + '!');
+        addLine(responseBox, 'p', 'Your enquiry reference is ' + referenceNumber + '. Our team will also reply to ' + data.email + ' within 1–2 business days.', 'response-reference');
+
+        if (data.type === 'availability' || data.type === 'gift') {
+            if (data.fragrance === 'not-sure') {
+                addLine(responseBox, 'p', 'Our fragrances range from R540 to R720. Our fragrance advisor will email you three personal recommendations based on your message.');
+            } else {
+                // Items to price: the whole cart, or the chosen fragrance
+                const items = data.fragrance === 'cart'
+                    ? cartItems
+                    : [{ name: data.fragrance, quantity: data.quantity }];
+
+                const list = document.createElement('ul');
+                list.className = 'response-items';
+                let subtotal = 0;
+                let itemCount = 0;
+
+                items.forEach(function (item) {
+                    const product = catalogue[item.name];
+                    if (!product) { return; }
+                    const lineTotal = product.price * item.quantity;
+                    subtotal += lineTotal;
+                    itemCount += item.quantity;
+
+                    const row = document.createElement('li');
+                    addLine(row, 'strong', item.name + ' × ' + item.quantity + ': ' + rand(lineTotal));
+                    addLine(row, 'span', availabilityText(item.name, item.quantity));
+                    list.appendChild(row);
+                });
+                responseBox.appendChild(list);
+
+                let total = subtotal;
+                const summary = document.createElement('div');
+                summary.className = 'response-summary';
+                addLine(summary, 'p', 'Subtotal: ' + rand(subtotal));
+
+                // Corporate discount: 10% off gift orders of 5 or more bottles
+                if (data.type === 'gift' && itemCount >= 5) {
+                    const discount = Math.round(subtotal * 0.1);
+                    total -= discount;
+                    addLine(summary, 'p', 'Corporate gift discount (10%): −' + rand(discount));
+                }
+                if (data.type === 'gift') {
+                    addLine(summary, 'p', 'Gift wrapping in our black and gold packaging: free');
+                }
+
+                const delivery = total >= FREE_DELIVERY_FROM ? 0 : DELIVERY_FEE;
+                total += delivery;
+                addLine(summary, 'p', 'Delivery in Cape Town: ' + (delivery === 0 ? 'free' : rand(delivery)));
+                addLine(summary, 'p', 'Estimated total: ' + rand(total), 'response-total');
+                responseBox.appendChild(summary);
+
+                if (data.neededBy) {
+                    const neededDate = new Date(data.neededBy + 'T00:00:00');
+                    addLine(responseBox, 'p', 'You need your order by ' + neededDate.toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }) + '. We will confirm the delivery date with you by email.');
+                }
+            }
+        } else if (data.type === 'stockist') {
+            addLine(responseBox, 'p', 'Thank you for your interest in stocking Niche Perfumes. Our partnerships team will email our wholesale price list and terms within 2 business days.');
+        } else {
+            addLine(responseBox, 'p', 'We have received your message and will reply within 1–2 business days.');
+        }
+
+        if (!sentOnline) {
+            addLine(responseBox, 'p', 'Note: our server could not be reached, so your enquiry was only processed in your browser. Please also email us at filloi@nicheperfumes.co.za.', 'response-note');
+        }
+
+        responseBox.hidden = false;
+        responseBox.focus();
+    }
+
+    enquiryForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // stop the page from reloading
+
+        // Run every check (not just until the first error) so all messages show at once
+        let formIsValid = true;
+        Object.keys(validators).forEach(function (key) {
+            if (!validators[key]()) {
+                formIsValid = false;
+            }
+        });
+
+        if (!formIsValid) {
+            enquiryForm.querySelector('.is-invalid').focus();
+            return;
+        }
+
+        const data = {
+            name: fields.name.value.trim(),
+            email: fields.email.value.trim(),
+            phone: fields.phone.value.trim(),
+            type: fields.type.value,
+            fragrance: fields.fragrance.value,
+            quantity: Number(fields.quantity.value),
+            neededBy: fields.neededBy.value,
+            message: fields.message.value.trim()
+        };
+        const referenceNumber = 'NP-' + Date.now().toString().slice(-6);
+
+        // AJAX: send the data in the background to the URL in the form's "action"
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending…';
+
+        fetch(enquiryForm.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Server error ' + response.status);
+                }
+                showResponse(data, referenceNumber, true);
+            })
+            .catch(function () {
+                showResponse(data, referenceNumber, false);
+            })
+            .finally(function () {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Enquiry';
+                enquiryForm.reset();
+                fields.message.dispatchEvent(new Event('input'));
+                toggleProductFields();
+            });
+    });
+}

@@ -1415,3 +1415,91 @@ footer {
         bottom: 0.75rem;
     }
 }
+
+/* ===== FORM VALIDATION AND RESPONSES ===== */
+.form-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Red border and message when a field is not valid */
+.enquiry-form .is-invalid {
+    border-color: #A33A3A;
+    background-color: #FCF4F4;
+}
+
+.field-error {
+    min-height: 1.2rem;
+    margin-top: 0.3rem;
+    font-size: var(--font-size-sm);
+    color: #A33A3A;
+}
+
+.char-counter {
+    margin-top: 0.3rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: right;
+}
+
+.enquiry-form button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+/* Response panel shown after the enquiry is sent */
+.enquiry-response {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-white);
+    border-top: 3px solid var(--color-gold);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+.enquiry-response:focus {
+    outline: none;
+}
+
+.enquiry-response h3 {
+    font-size: var(--font-size-h3);
+    margin-bottom: 0.5rem;
+}
+
+.enquiry-response p {
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+.response-reference {
+    font-size: var(--font-size-sm);
+}
+
+.response-items li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.response-items span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.response-summary {
+    margin-top: var(--spacing-sm);
+}
+
+.response-total {
+    font-weight: 700;
+    font-size: var(--font-size-lg);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-gold);
+}
+
+.response-note {
+    font-size: var(--font-size-sm);
+    font-style: italic;
+}

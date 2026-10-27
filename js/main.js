@@ -661,11 +661,22 @@ if (enquiryForm) {
         return fields.type.value === 'availability' || fields.type.value === 'gift';
     }
 
+    // The quantity field is not needed for "My cart" (the cart already has quantities)
+    const quantityParts = [
+        document.querySelector('label[for="quantity"]'),
+        fields.quantity,
+        document.getElementById('quantity-error')
+    ];
+
     function toggleProductFields() {
         productFields.hidden = !needsProduct();
+        quantityParts.forEach(function (part) {
+            part.hidden = fields.fragrance.value === 'cart';
+        });
     }
 
     fields.type.addEventListener('change', toggleProductFields);
+    fields.fragrance.addEventListener('change', toggleProductFields);
 
     // If the visitor comes from the cart, add a "My cart" option and fill in the form
     let cartItems = [];
@@ -718,9 +729,14 @@ if (enquiryForm) {
         }
     };
 
-    // Check each field when the visitor leaves it
+    // Check each field when the visitor leaves it, and update an error while they fix it
     Object.keys(validators).forEach(function (key) {
         fields[key].addEventListener('blur', validators[key]);
+        fields[key].addEventListener('input', function () {
+            if (fields[key].classList.contains('is-invalid')) {
+                validators[key]();
+            }
+        });
     });
 
     // Format a number as Rand, e.g. R1 300
@@ -880,5 +896,119 @@ if (enquiryForm) {
                 fields.message.dispatchEvent(new Event('input'));
                 toggleProductFields();
             });
+    });
+}
+
+/* ===== CONTACT FORM (contact page) =====
+   Validates the message, then compiles it into an email addressed to
+   Niche Perfumes. The visitor sees a preview and sends it from their own
+   email app (a "mailto:" link). */
+const contactForm = document.getElementById('contact-form');
+
+if (contactForm) {
+    const CONTACT_EMAIL = 'filloi@nicheperfumes.co.za'; // the recipient of every message
+
+    const contactFields = {
+        name: document.getElementById('contact-name'),
+        email: document.getElementById('contact-email'),
+        phone: document.getElementById('contact-phone'),
+        type: document.getElementById('contact-type'),
+        subject: document.getElementById('contact-subject'),
+        message: document.getElementById('contact-message')
+    };
+    const emailPreview = document.getElementById('email-preview');
+
+    setUpCounter(contactFields.message, document.getElementById('contact-message-counter'), 20, 1000);
+
+    const contactValidators = {
+        name: function () { return showFieldError(contactFields.name, checkName(contactFields.name.value.trim())); },
+        email: function () { return showFieldError(contactFields.email, checkEmail(contactFields.email.value.trim())); },
+        phone: function () { return showFieldError(contactFields.phone, checkPhone(contactFields.phone.value.trim())); },
+        type: function () {
+            return showFieldError(contactFields.type, contactFields.type.value === '' ? 'Please choose a message type.' : '');
+        },
+        subject: function () {
+            const length = contactFields.subject.value.trim().length;
+            return showFieldError(contactFields.subject, length < 5 || length > 80 ? 'Your subject should be 5 to 80 characters.' : '');
+        },
+        message: function () {
+            return showFieldError(contactFields.message, checkMessage(contactFields.message.value.trim(), 20, 1000));
+        }
+    };
+
+    Object.keys(contactValidators).forEach(function (key) {
+        contactFields[key].addEventListener('blur', contactValidators[key]);
+        contactFields[key].addEventListener('input', function () {
+            if (contactFields[key].classList.contains('is-invalid')) {
+                contactValidators[key]();
+            }
+        });
+    });
+
+    contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        let formIsValid = true;
+        Object.keys(contactValidators).forEach(function (key) {
+            if (!contactValidators[key]()) {
+                formIsValid = false;
+            }
+        });
+
+        if (!formIsValid) {
+            contactForm.querySelector('.is-invalid').focus();
+            return;
+        }
+
+        // 1. Compile the form into an email
+        const name = contactFields.name.value.trim();
+        const emailSubject = '[' + contactFields.type.value + '] ' + contactFields.subject.value.trim();
+        const emailBody =
+            'Name: ' + name + '\n' +
+            'Email: ' + contactFields.email.value.trim() + '\n' +
+            'Phone: ' + (contactFields.phone.value.trim() || 'Not provided') + '\n' +
+            'Message type: ' + contactFields.type.value + '\n\n' +
+            contactFields.message.value.trim() + '\n\n' +
+            'Sent from the Niche Perfumes website contact form.';
+
+        // encodeURIComponent makes spaces, line breaks and symbols safe inside a link
+        const mailtoLink = 'mailto:' + CONTACT_EMAIL +
+            '?subject=' + encodeURIComponent(emailSubject) +
+            '&body=' + encodeURIComponent(emailBody);
+
+        // 2. Show a preview (built with textContent so typed text is never run as code)
+        emailPreview.innerHTML = '';
+
+        const title = document.createElement('h3');
+        title.textContent = 'Your email is ready, ' + name.split(' ')[0] + '!';
+
+        const intro = document.createElement('p');
+        intro.textContent = 'Check the preview below, then click the button to send it from your email app.';
+
+        const preview = document.createElement('div');
+        preview.className = 'email-preview-box';
+        [['To', CONTACT_EMAIL], ['Subject', emailSubject]].forEach(function (pair) {
+            const line = document.createElement('p');
+            const label = document.createElement('strong');
+            label.textContent = pair[0] + ': ';
+            line.appendChild(label);
+            line.appendChild(document.createTextNode(pair[1]));
+            preview.appendChild(line);
+        });
+        const body = document.createElement('pre');
+        body.textContent = emailBody;
+        preview.appendChild(body);
+
+        const sendLink = document.createElement('a');
+        sendLink.href = mailtoLink;
+        sendLink.className = 'send-email-button';
+        sendLink.textContent = 'Send with My Email App';
+
+        emailPreview.append(title, intro, preview, sendLink);
+        emailPreview.hidden = false;
+        emailPreview.focus();
+
+        // 3. Open the visitor's email app straight away with everything filled in
+        window.location.href = mailtoLink;
     });
 }

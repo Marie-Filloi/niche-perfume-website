@@ -44,6 +44,53 @@
                 <a href="#">Facebook</a>
             </div>
         </section>
+                <!-- Contact form: js/main.js checks it and turns it into an email -->
+        <section class="enquiry-form contact-form" aria-labelledby="contact-form-title">
+            <h2 id="contact-form-title">Send Us a Message</h2>
+            <p>Questions, feedback or ideas? Fill in the form and we'll prepare an email for you to send to our team.</p>
+
+            <form id="contact-form" action="mailto:filloi@nicheperfumes.co.za" method="post" enctype="text/plain" novalidate>
+                <p class="form-hint">Fields marked * are required.</p>
+
+                <label for="contact-name">Full Name *</label>
+                <input type="text" id="contact-name" name="name" required minlength="2" maxlength="60" autocomplete="name">
+                <p class="field-error" id="contact-name-error" aria-live="polite"></p>
+
+                <label for="contact-email">Email Address *</label>
+                <input type="email" id="contact-email" name="email" required maxlength="100" autocomplete="email">
+                <p class="field-error" id="contact-email-error" aria-live="polite"></p>
+
+                <label for="contact-phone">Phone Number (optional)</label>
+                <input type="tel" id="contact-phone" name="phone" placeholder="e.g. 081 301 0574" autocomplete="tel">
+                <p class="field-error" id="contact-phone-error" aria-live="polite"></p>
+
+                <label for="contact-type">Message Type *</label>
+                <select id="contact-type" name="message-type" required>
+                    <option value="">Choose a message type</option>
+                    <option value="General question">General question</option>
+                    <option value="Product feedback">Product feedback</option>
+                    <option value="Order or delivery">Order or delivery</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="contact-type-error" aria-live="polite"></p>
+
+                <label for="contact-subject">Subject *</label>
+                <input type="text" id="contact-subject" name="subject" required minlength="5" maxlength="80">
+                <p class="field-error" id="contact-subject-error" aria-live="polite"></p>
+
+                <label for="contact-message">Message *</label>
+                <textarea id="contact-message" name="message" rows="6" required minlength="20" maxlength="1000"></textarea>
+                <p class="char-counter" id="contact-message-counter">0 / 1000 characters (minimum 20)</p>
+                <p class="field-error" id="contact-message-error" aria-live="polite"></p>
+
+                <button type="submit">Prepare My Email</button>
+            </form>
+
+            <!-- Email preview, filled in by js/main.js -->
+            <div id="email-preview" class="enquiry-response email-preview" tabindex="-1" hidden></div>
+        </section>
 
                <section class="map-section">
             <h3>Find Us</h3>

@@ -1503,3 +1503,45 @@ footer {
     font-size: var(--font-size-sm);
     font-style: italic;
 }
+
+/* ===== CONTACT FORM ===== */
+/* Uses the same field styles as the enquiry form (.enquiry-form) */
+.contact-form {
+    padding: 0 1.25rem var(--spacing-lg);
+}
+
+.email-preview-box {
+    margin: var(--spacing-sm) 0;
+    padding: var(--spacing-sm);
+    background-color: var(--color-ivory);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+.email-preview-box pre {
+    margin-top: 0.5rem;
+    font-family: var(--font-body);
+    font-size: var(--font-size-sm);
+    white-space: pre-wrap; /* keeps the line breaks but wraps long lines */
+    color: var(--color-text);
+}
+
+.send-email-button {
+    display: block;
+    padding: 0.9rem;
+    background-color: var(--color-black);
+    color: var(--color-gold);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+.send-email-button:hover,
+.send-email-button:focus-visible {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+    outline: none;
+}

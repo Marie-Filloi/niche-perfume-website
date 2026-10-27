@@ -26,95 +26,115 @@
 </header>
 
     <main>
-       <section class="products-intro">
-    <h2>Our Fragrances</h2>
-    <p>Browse our curated selection, organised by scent family. Every fragrance is genuine, sourced directly from recognised perfume houses.</p>
-</section>
+        <section class="products-intro">
+            <h2>Our Fragrances</h2>
+            <p>Browse our curated selection, organised by scent family. Every fragrance is genuine, sourced directly from recognised perfume houses.</p>
+        </section>
 
+        <!-- Find Your Fragrance: search, filter and sort (js/main.js) -->
+        <section class="product-tools" aria-label="Search, filter and sort fragrances">
+            <h3>Find Your Fragrance</h3>
+            <div class="search-box">
+                <label for="product-search" class="visually-hidden">Search fragrances</label>
+                <input type="search" id="product-search" placeholder="Search by name or note, e.g. vanilla, rose, citrus">
+            </div>
 
-    <section class="scent-family">
-    <h3>Woody</h3>
-   <img src="images/products/medium/product-1.jpg"
-     srcset="images/products/small/product-1.jpg 400w,
-             images/products/medium/product-1.jpg 800w"
-     sizes="(max-width: 768px) 100vw, 300px"
-     alt="Woody scent perfume bottle">
-    <p>Warm, grounding, and long-lasting — built around notes like sandalwood, cedar, and vetiver. Best for evening wear and cooler months.</p>
-    <p class="price">From R650</p>
-</section>
+            <div class="filter-buttons" role="group" aria-label="Filter by scent family">
+                <button class="filter-button is-active" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-button" data-filter="woody" aria-pressed="false">Woody</button>
+                <button class="filter-button" data-filter="floral" aria-pressed="false">Floral</button>
+                <button class="filter-button" data-filter="oriental" aria-pressed="false">Oriental</button>
+                <button class="filter-button" data-filter="fresh" aria-pressed="false">Fresh</button>
+                <button class="filter-button" data-filter="unisex" aria-pressed="false">Unisex</button>
+            </div>
 
-<section class="scent-family">
-    <h3>Floral</h3>
-   <img src="images/products/medium/product-2.jpg"
-     srcset="images/products/small/product-2.jpg 400w,
-             images/products/medium/product-2.jpg 800w"
-     sizes="(max-width: 768px) 100vw, 300px"
-     alt="Floral scent perfume bottle">
-    <p>Soft and romantic, centred on rose, jasmine, and peony. Best for daytime, spring and summer.</p>
-    <p class="price">From R580</p>
-</section>
+            <div class="tools-footer">
+                <p class="results-count" id="results-count" aria-live="polite">Showing 8 of 8 fragrances</p>
+                <div class="sort-box">
+                    <label for="product-sort">Sort by</label>
+                    <select id="product-sort">
+                        <option value="featured">Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </section>
 
-<section class="scent-family">
-    <h3>Oriental / Amber</h3>
-    <img src="images/products/medium/product-3.jpg"
-     srcset="images/products/small/product-3.jpg 400w,
-             images/products/medium/product-3.jpg 800w"
-     sizes="(max-width: 768px) 100vw, 300px"
-     alt="Oriental amber scent perfume bottle">
-    <p>Rich and sensual, with vanilla, amber, and spice. Best for special occasions and evening wear.</p>
-    <p class="price">From R720</p>
-</section>
+        <!-- Scent families (written in HTML so search engines can read them) -->
+        <div id="product-list" class="product-list">
+            <section class="scent-family" data-family="woody" data-price="650">
+                <h3>Woody</h3>
+                <img src="images/products/medium/product-1.jpg"
+                     srcset="images/products/small/product-1.jpg 400w,
+                             images/products/medium/product-1.jpg 800w"
+                     sizes="(max-width: 768px) 100vw, 300px"
+                     alt="Woody scent perfume bottle">
+                <p>Warm, grounding, and long-lasting — built around notes like sandalwood, cedar, and vetiver. Best for evening wear and cooler months.</p>
+                <p class="price">From R650</p>
+                <button class="add-to-cart" data-name="Woody Collection" data-price="650">Add to Cart</button>
+            </section>
 
+            <section class="scent-family" data-family="floral" data-price="580">
+                <h3>Floral</h3>
+                <img src="images/products/medium/product-2.jpg"
+                     srcset="images/products/small/product-2.jpg 400w,
+                             images/products/medium/product-2.jpg 800w"
+                     sizes="(max-width: 768px) 100vw, 300px"
+                     alt="Floral scent perfume bottle">
+                <p>Soft and romantic, centred on rose, jasmine, and peony. Best for daytime, spring and summer.</p>
+                <p class="price">From R580</p>
+                <button class="add-to-cart" data-name="Floral Collection" data-price="580">Add to Cart</button>
+            </section>
 
-<section class="scent-family">
-    <h3>Fresh / Citrus</h3>
-    <img src="images/products/medium/product-4.jpg"
-     srcset="images/products/small/product-4.jpg 400w,
-             images/products/medium/product-4.jpg 800w"
-     sizes="(max-width: 768px) 100vw, 300px"
-     alt="Fresh citrus scent perfume bottle">
-    <p>Light, clean, and energising — citrus, aquatic, and green notes. Best for everyday wear and warm weather.</p>
-    <p class="price">From R540</p>
-</section>
+            <section class="scent-family" data-family="oriental" data-price="720">
+                <h3>Oriental / Amber</h3>
+                <img src="images/products/medium/product-3.jpg"
+                     srcset="images/products/small/product-3.jpg 400w,
+                             images/products/medium/product-3.jpg 800w"
+                     sizes="(max-width: 768px) 100vw, 300px"
+                     alt="Oriental amber scent perfume bottle">
+                <p>Rich and sensual, with vanilla, amber, and spice. Best for special occasions and evening wear.</p>
+                <p class="price">From R720</p>
+                <button class="add-to-cart" data-name="Oriental / Amber Collection" data-price="720">Add to Cart</button>
+            </section>
 
-<section class="scent-family">
-    <h3>Unisex</h3>
-   <img src="images/products/medium/product-5.jpg"
-     srcset="images/products/small/product-5.jpg 400w,
-             images/products/medium/product-5.jpg 800w"
-     sizes="(max-width: 768px) 100vw, 300px"
-     alt="Unisex scent perfume bottle">
-    <p>A balanced, versatile fragrance designed to suit everyone, blending warm and fresh notes for everyday wear.</p>
-    <p class="price">From R690</p>
-</section>
+            <section class="scent-family" data-family="fresh" data-price="540">
+                <h3>Fresh / Citrus</h3>
+                <img src="images/products/medium/product-4.jpg"
+                     srcset="images/products/small/product-4.jpg 400w,
+                             images/products/medium/product-4.jpg 800w"
+                     sizes="(max-width: 768px) 100vw, 300px"
+                     alt="Fresh citrus scent perfume bottle">
+                <p>Light, clean, and energising — citrus, aquatic, and green notes. Best for everyday wear and warm weather.</p>
+                <p class="price">From R540</p>
+                <button class="add-to-cart" data-name="Fresh / Citrus Collection" data-price="540">Add to Cart</button>
+            </section>
 
-<section class="more-collection">
-    <h3>More From Our Collection</h3>
-    <div class="collection-item">
-        <img src="images/products/medium/product-6.jpg"
-             srcset="images/products/small/product-6.jpg 400w,
-                     images/products/medium/product-6.jpg 800w"
-             sizes="(max-width: 768px) 100vw, 300px"
-             alt="Perfume bottle from our collection">
-        <p class="price">From R610</p>
-    </div>
-    <div class="collection-item">
-        <img src="images/products/medium/product-7.jpg"
-             srcset="images/products/small/product-7.jpg 400w,
-                     images/products/medium/product-7.jpg 800w"
-             sizes="(max-width: 768px) 100vw, 300px"
-             alt="Perfume bottle from our collection">
-        <p class="price">From R670</p>
-    </div>
-    <div class="collection-item">
-        <img src="images/products/medium/product-8.jpg"
-             srcset="images/products/small/product-8.jpg 400w,
-                     images/products/medium/product-8.jpg 800w"
-             sizes="(max-width: 768px) 100vw, 300px"
-             alt="Perfume bottle from our collection">
-        <p class="price">From R590</p>
-    </div>
-</section>
+            <section class="scent-family" data-family="unisex" data-price="690">
+                <h3>Unisex</h3>
+                <img src="images/products/medium/product-5.jpg"
+                     srcset="images/products/small/product-5.jpg 400w,
+                             images/products/medium/product-5.jpg 800w"
+                     sizes="(max-width: 768px) 100vw, 300px"
+                     alt="Unisex scent perfume bottle">
+                <p>A balanced, versatile fragrance designed to suit everyone, blending warm and fresh notes for everyday wear.</p>
+                <p class="price">From R690</p>
+                <button class="add-to-cart" data-name="Unisex Collection" data-price="690">Add to Cart</button>
+            </section>
+        </div>
+
+        <!-- Shown by js/main.js when nothing matches the search -->
+        <div id="no-results" class="no-results" hidden>
+            <p>No fragrances match your search.</p>
+            <button id="clear-filters" class="clear-filters">Clear search and filters</button>
+        </div>
+
+        <!-- More From Our Collection: the cards are loaded by js/main.js -->
+        <section class="more-collection" id="collection-section">
+            <h3>More From Our Collection</h3>
+            <div id="collection-list" class="collection-grid"></div>
+        </section>
     </main>
 
     <!-- Footer -->

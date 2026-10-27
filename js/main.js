@@ -20,6 +20,348 @@ if (navToggle && mainNav) {
     });
 }
 
+/* ===== PRODUCTS PAGE: DYNAMIC COLLECTION =====
+   The "More From Our Collection" cards are not written in the HTML.
+   They are created here from a list of product data and added to the page. */
+const collectionList = document.getElementById('collection-list');
+
+const collectionProducts = [
+    {
+        name: 'Luminous Floral',
+        family: 'floral',
+        type: 'Eau de Parfum',
+        notes: 'Jasmine, rose and soft pear',
+        price: 610,
+        image: 'product-6.jpg'
+    },
+    {
+        name: 'Aquatic Fresh',
+        family: 'fresh',
+        type: 'Eau de Toilette',
+        notes: 'Mint, green apple and cedar',
+        price: 670,
+        image: 'product-7.jpg'
+    },
+    {
+        name: 'Classic Floral',
+        family: 'floral',
+        type: 'Eau de Parfum',
+        notes: 'Aldehydes, rose and jasmine',
+        price: 590,
+        image: 'product-8.jpg'
+    }
+];
+
+if (collectionList) {
+    collectionProducts.forEach(function (product) {
+        const card = document.createElement('article');
+        card.className = 'collection-item';
+        card.dataset.family = product.family;
+        card.dataset.price = product.price;
+
+        card.innerHTML =
+            '<img src="images/products/medium/' + product.image + '"' +
+            ' srcset="images/products/small/' + product.image + ' 400w, images/products/medium/' + product.image + ' 800w"' +
+            ' sizes="(max-width: 768px) 100vw, 300px"' +
+            ' alt="' + product.name + ' perfume bottle">' +
+            '<h4>' + product.name + '</h4>' +
+            '<p class="collection-notes">' + product.type + ' · ' + product.notes + '</p>' +
+            '<p class="price">From R' + product.price + '</p>' +
+            '<button class="add-to-cart" data-name="' + product.name + '" data-price="' + product.price + '">Add to Cart</button>';
+
+        collectionList.appendChild(card);
+    });
+}
+
+/* ===== PRODUCTS PAGE: SEARCH, FILTER AND SORT =====
+   Search by name or note, filter by scent family, and sort by price.
+   Matching products stay visible; the others get the "hidden" attribute. */
+const productList = document.getElementById('product-list');
+const searchInput = document.getElementById('product-search');
+
+if (productList && collectionList && searchInput) {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const sortSelect = document.getElementById('product-sort');
+    const resultsCount = document.getElementById('results-count');
+    const noResults = document.getElementById('no-results');
+    const clearButton = document.getElementById('clear-filters');
+    const collectionSection = document.getElementById('collection-section');
+
+    const familyItems = Array.from(productList.querySelectorAll('.scent-family'));
+    const collectionItems = Array.from(collectionList.querySelectorAll('.collection-item'));
+    const allItems = familyItems.concat(collectionItems);
+
+    // Remember the original ("Featured") order of every product
+    allItems.forEach(function (item, index) {
+        item.dataset.order = index;
+    });
+
+    let activeFilter = 'all';
+
+    // Re-order the products inside one container, based on the chosen sort
+    function sortItems(container, items) {
+        const sortValue = sortSelect.value;
+
+        const sorted = items.slice().sort(function (a, b) {
+            if (sortValue === 'price-asc') {
+                return a.dataset.price - b.dataset.price;
+            }
+            if (sortValue === 'price-desc') {
+                return b.dataset.price - a.dataset.price;
+            }
+            return a.dataset.order - b.dataset.order;
+        });
+
+        sorted.forEach(function (item) {
+            container.appendChild(item); // appendChild moves the element to the end
+        });
+    }
+
+    function updateProducts() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        allItems.forEach(function (item) {
+            const matchesFamily = activeFilter === 'all' || item.dataset.family === activeFilter;
+            const matchesSearch = searchTerm === '' || item.textContent.toLowerCase().includes(searchTerm);
+            const isVisible = matchesFamily && matchesSearch;
+
+            item.hidden = !isVisible;
+            if (isVisible) {
+                visibleCount++;
+            }
+        });
+
+        sortItems(productList, familyItems);
+        sortItems(collectionList, collectionItems);
+
+        // Hide the whole collection section when none of its cards match
+        collectionSection.hidden = collectionItems.every(function (item) {
+            return item.hidden;
+        });
+
+        resultsCount.textContent = 'Showing ' + visibleCount + ' of ' + allItems.length + ' fragrances';
+        noResults.hidden = visibleCount > 0;
+    }
+
+    // Search: update the list on every key press
+    searchInput.addEventListener('input', updateProducts);
+
+    // Filter buttons: only one family is active at a time
+    filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            activeFilter = button.dataset.filter;
+
+            filterButtons.forEach(function (otherButton) {
+                const isActive = otherButton === button;
+                otherButton.classList.toggle('is-active', isActive);
+                otherButton.setAttribute('aria-pressed', isActive);
+            });
+
+            updateProducts();
+        });
+    });
+
+    // Sort menu
+    sortSelect.addEventListener('change', updateProducts);
+
+    // "Clear search and filters" button in the no-results message
+    clearButton.addEventListener('click', function () {
+        searchInput.value = '';
+        sortSelect.value = 'featured';
+        filterButtons[0].click(); // the "All" button
+        searchInput.focus();
+    });
+
+    updateProducts();
+}
+
+/* ===== SHOPPING CART (products page) =====
+   "Add to Cart" buttons add products to a cart saved in localStorage,
+   so the cart is kept when the page is reloaded. The cart button and
+   side panel are created with JavaScript. */
+const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+if (addToCartButtons.length > 0) {
+    const CART_KEY = 'nichePerfumesCart';
+
+    // Read and save the cart (try/catch in case the browser blocks storage)
+    function loadCart() {
+        try {
+            return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveCart() {
+        try {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        } catch (error) {
+            // Storage is not available: the cart still works until the page is closed
+        }
+    }
+
+    let cart = loadCart();
+
+    // 1. Floating cart button (bottom-right corner)
+    const cartToggle = document.createElement('button');
+    cartToggle.className = 'cart-toggle';
+    cartToggle.setAttribute('aria-label', 'Open shopping cart');
+    cartToggle.innerHTML = 'Cart <span class="cart-count">0</span>';
+
+    // 2. Dark overlay behind the cart panel
+    const cartOverlay = document.createElement('div');
+    cartOverlay.className = 'cart-overlay';
+
+    // 3. Cart side panel
+    const cartDrawer = document.createElement('aside');
+    cartDrawer.className = 'cart-drawer';
+    cartDrawer.setAttribute('role', 'dialog');
+    cartDrawer.setAttribute('aria-modal', 'true');
+    cartDrawer.setAttribute('aria-labelledby', 'cart-title');
+    cartDrawer.innerHTML =
+        '<div class="cart-header">' +
+            '<h2 id="cart-title">Your Cart</h2>' +
+            '<button class="cart-close" aria-label="Close cart">&times;</button>' +
+        '</div>' +
+        '<ul class="cart-items"></ul>' +
+        '<p class="cart-empty">Your cart is empty. Add a fragrance to get started.</p>' +
+        '<div class="cart-footer">' +
+            '<p class="cart-total">Total: <strong>R0</strong></p>' +
+            '<a href="enquiry.html" class="cart-checkout">Enquire About These Items</a>' +
+            '<button class="cart-clear">Clear cart</button>' +
+        '</div>';
+
+    document.body.append(cartToggle, cartOverlay, cartDrawer);
+
+    const cartCount = cartToggle.querySelector('.cart-count');
+    const cartItemsList = cartDrawer.querySelector('.cart-items');
+    const cartEmpty = cartDrawer.querySelector('.cart-empty');
+    const cartFooter = cartDrawer.querySelector('.cart-footer');
+    const cartTotal = cartDrawer.querySelector('.cart-total strong');
+    const cartClose = cartDrawer.querySelector('.cart-close');
+
+    // Draw the cart contents, item count and total
+    function renderCart() {
+        cartItemsList.innerHTML = '';
+        let itemCount = 0;
+        let total = 0;
+
+        cart.forEach(function (item, index) {
+            itemCount += item.quantity;
+            total += item.price * item.quantity;
+
+            const row = document.createElement('li');
+            row.className = 'cart-item';
+            row.innerHTML =
+                '<div class="cart-item-info">' +
+                    '<span class="cart-item-name">' + item.name + '</span>' +
+                    '<span class="cart-item-price">R' + item.price + ' each</span>' +
+                '</div>' +
+                '<div class="cart-quantity">' +
+                    '<button data-action="decrease" data-index="' + index + '" aria-label="Decrease quantity of ' + item.name + '">&minus;</button>' +
+                    '<span>' + item.quantity + '</span>' +
+                    '<button data-action="increase" data-index="' + index + '" aria-label="Increase quantity of ' + item.name + '">+</button>' +
+                '</div>' +
+                '<button class="cart-remove" data-action="remove" data-index="' + index + '">Remove</button>';
+            cartItemsList.appendChild(row);
+        });
+
+        cartCount.textContent = itemCount;
+        cartTotal.textContent = 'R' + total;
+        cartItemsList.hidden = cart.length === 0;
+        cartEmpty.hidden = cart.length > 0;
+        cartFooter.hidden = cart.length === 0;
+        saveCart();
+    }
+
+    function openCart() {
+        cartDrawer.classList.add('is-open');
+        cartOverlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        cartClose.focus();
+    }
+
+    function closeCart() {
+        cartDrawer.classList.remove('is-open');
+        cartOverlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        cartToggle.focus();
+    }
+
+    // Add to Cart: add a new item, or increase the quantity if it is already in the cart
+    addToCartButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const name = button.dataset.name;
+            const price = Number(button.dataset.price);
+            const existingItem = cart.find(function (item) {
+                return item.name === name;
+            });
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name: name, price: price, quantity: 1 });
+            }
+
+            renderCart();
+
+            // Short confirmation on the button and a little "pop" on the cart button
+            button.textContent = 'Added ✓';
+            button.classList.add('is-added');
+            cartToggle.classList.add('is-bumped');
+
+            setTimeout(function () {
+                button.textContent = 'Add to Cart';
+                button.classList.remove('is-added');
+                cartToggle.classList.remove('is-bumped');
+            }, 1500);
+        });
+    });
+
+    // Quantity and remove buttons inside the cart (one listener for all rows)
+    cartItemsList.addEventListener('click', function (event) {
+        const target = event.target.closest('button');
+        if (!target) {
+            return;
+        }
+
+        const index = Number(target.dataset.index);
+        const action = target.dataset.action;
+
+        if (action === 'increase') {
+            cart[index].quantity++;
+        } else if (action === 'decrease') {
+            cart[index].quantity--;
+            if (cart[index].quantity === 0) {
+                cart.splice(index, 1);
+            }
+        } else if (action === 'remove') {
+            cart.splice(index, 1);
+        }
+
+        renderCart();
+    });
+
+    cartDrawer.querySelector('.cart-clear').addEventListener('click', function () {
+        cart = [];
+        renderCart();
+    });
+
+    cartToggle.addEventListener('click', openCart);
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && cartDrawer.classList.contains('is-open')) {
+            closeCart();
+        }
+    });
+
+    renderCart();
+}
+
 /* ===== IMAGE GALLERY LIGHTBOX (products page) =====
    Clicking a product image opens it in a large overlay.
    The overlay is built with JavaScript (DOM manipulation),
@@ -158,7 +500,7 @@ if (mapElement && typeof L !== 'undefined') {
     // 2. Create the map (scroll-wheel zoom is off so the page scrolls normally)
     const map = L.map('store-map', { scrollWheelZoom: false });
 
-        // 3. Elegant light grey map style (Esri World Light Gray Canvas, free with attribution)
+    // 3. Elegant light grey map style (Esri World Light Gray Canvas, free with attribution)
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
         maxZoom: 16

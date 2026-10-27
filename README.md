@@ -40,10 +40,10 @@ The website consists of five core pages:
 | Page | File | Purpose |
 |---|---|---|
 | Home | `index.html` | Hero image, brand introduction, call-to-action, featured products |
-| About Us | `about.html` | Brand history, mission, vision |
-| Products | `products.html` | Fragrance catalogue organised by scent family |
-| Enquiry | `enquiry.html` | Contact form for product/stockist enquiries |
-| Contact | `contact.html` | Contact details, embedded map, store locations |
+| About Us | `about.html` | Brand history, mission, vision, FAQ accordion |
+| Products | `products.html` | Fragrance catalogue by scent family, search/filter/sort, lightbox gallery, Add to Cart |
+| Enquiry | `enquiry.html` | Validated enquiry form with an instant price and availability response |
+| Contact | `contact.html` | Contact details, validated contact form (compiled into an email), interactive map of two stores |
 
 Design palette (used consistently across the proposal and the coded pages):
 - Primary: Deep Black `#1A1A1A`
@@ -134,23 +134,23 @@ logged in the Changelog below.
 - **Mobile navigation toggle:** on screens 768px and below, the menu is hidden behind a
   hamburger button. Clicking it adds or removes the `is-open` class on the `<nav>` and updates
   `aria-expanded`, so screen readers know whether the menu is open.
-  - **Product image lightbox:** on `products.html`, clicking any product or gallery image opens
+- **Product image lightbox:** on `products.html`, clicking any product or gallery image opens
   the 800px version in a full-screen overlay with a caption. The overlay is created with
   JavaScript (DOM manipulation: `createElement`, `append`, `classList`). It can be closed with
   the × button, a click outside the image, or the Escape key, and it also works with the keyboard
   (Tab to an image, then Enter).
-  - **FAQ accordion:** on `about.html`, six frequently asked questions (authenticity, delivery,
+- **FAQ accordion:** on `about.html`, six frequently asked questions (authenticity, delivery,
   gift wrapping, returns, choosing a scent for the weather and the perfume types, and sensitive
   skin). Clicking a question opens its answer and closes the others, so only one is open at a
   time. The answers slide open with a CSS transition (`grid-template-rows` from `0fr` to `1fr`),
   and the gold "+" icon rotates into an "×". Each question is a `<button>` with `aria-expanded`
   and `aria-controls`, so the accordion works with a keyboard and screen readers.
-  - **Interactive store map:** on `contact.html`, the static Google Maps embed was replaced with an
+- **Interactive store map:** on `contact.html`, the static Google Maps embed was replaced with an
   interactive map built with the Leaflet library. It shows both store locations (the Cape Town CBD
   flagship store and the V&A Waterfront boutique opening in 2027) with custom gold markers and
   popups showing the address and opening hours. Each store card below the map has a "Show on map"
   button that flies the map to that store and opens its popup.
-  - **Dynamic product listings:** on `products.html`, the "More From Our Collection" cards are not
+- **Dynamic product listings:** on `products.html`, the "More From Our Collection" cards are not
   written in the HTML. They are created by JavaScript from a list of product data (name, scent
   family, type, notes, price, and image), including their responsive `srcset` images. The five
   scent families stay in the HTML so search engines can read them.
@@ -162,6 +162,28 @@ logged in the Changelog below.
   number of items and opens a side panel where quantities can be changed or removed, with a
   running total and a link to the Enquiry page. The cart is saved in `localStorage`, so it is
   kept when the page is reloaded.
+
+### Forms
+- **Enquiry form (`enquiry.html`):** validated with JavaScript (name, email, South African phone
+  number, enquiry type, fragrance, quantity 1–50, a "needed by" date that cannot be in the past,
+  and a 20–500 character message with a live counter). Error messages appear under each field and
+  update while the visitor types. The form is sent with AJAX (`fetch`) to the URL in its `action`
+  attribute, without reloading the page, and the visitor then sees a response with the price, stock
+  availability, a 10% corporate discount on gift orders of 5 or more, free gift wrapping, the
+  delivery cost (free from R1000), an estimated total, and a reference number. Visitors coming from
+  the cart get the form filled in with their cart items.
+- **Contact form (`contact.html`):** validated in the same way (name, email, phone, message type,
+  subject, and a 20–1000 character message). Once valid, the details are compiled into an email to
+  the recipient set in the code (`filloi@nicheperfumes.co.za`) with a clear subject line such as
+  "[Product feedback] ...". The visitor sees a preview and their email app opens with the message
+  ready to send (`mailto:` link built with `encodeURIComponent`).
+
+### Security
+- Visitor input is never inserted as HTML: both form responses are built with `createElement` and
+  `textContent`, so code typed into a form cannot run on the page (protection against XSS).
+- The Leaflet library is loaded with Subresource Integrity (`integrity` and `crossorigin`), so the
+  browser refuses the file if it has been changed.
+- `localStorage` access is wrapped in `try/catch`, so the cart still works if storage is blocked.
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -204,8 +226,13 @@ Shared across all five pages:
 | 25 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a lightbox gallery to `products.html`: clicking any of the 8 product images opens its 800px version in a full-screen overlay with a caption. The overlay is built with DOM manipulation in `js/main.js`, closes with the × button, an outside click, or the Escape key, and is keyboard accessible (`tabindex`, `aria-modal`, focus returned to the image on close). Styled in `style.css` with a fade-in and zoom transition. |
 | 26 October 2026 | Part 3 | Interactive Elements / JavaScript | Added a FAQ accordion to `about.html` with six questions (authenticity, delivery in Cape Town, gift wrapping, 72-hour returns policy with till slip and no refunds, choosing a scent for the weather including perfume concentration types, and tips for skin sensitive to alcohol). Styled in an editorial luxury look (numbered questions, thin gold lines, rotating "+" icon, smooth slide animation) and made accessible with `<button>`, `aria-expanded`, `aria-controls`, and `role="region"`. The answers include internal links to `products.html` and `enquiry.html` for SEO. |
 | 26 October 2026 | Part 3 | Interactive Map / JavaScript | Replaced the Google Maps `<iframe>` on `contact.html` with an interactive Leaflet map showing two locations: the Cape Town CBD flagship store (Long Street) and the planned V&A Waterfront boutique (Victoria Wharf). Added custom gold markers (`L.divIcon`), popups with the address and opening hours, two store cards with "Show on map" buttons (`flyTo` animation), and a light grey Esri basemap to match the brand palette. Leaflet is loaded from a CDN with Subresource Integrity (`integrity` and `crossorigin`) for security. The first basemap tried (CARTO) required an API key, so it was replaced with the free Esri World Light Gray Canvas. |
-| 28 October 2026 | Part 3 | Dynamic Content / JavaScript | Added a "Find Your Fragrance" toolbar to `products.html` with a live search (by name or note), scent-family filter buttons (`aria-pressed`), and price sorting, plus a results counter (`aria-live`) and a "no results" message. The "More From Our Collection" cards are now generated by JavaScript from a product data array, and each collection product was given a name, type, and notes. Wrapped the scent-family sections in `#product-list` with `data-family` and `data-price` attributes so they can be filtered and re-ordered. |
+| 28 October 2026 | Part 3 | Dynamic Content / JavaScript | Added a "Find Your Fragrance" toolbar to `products.html` with a live search (by name or note), scent-family filter buttons (`aria-pressed`), and price sorting, plus a results counter (`aria-live`) and a "no results" message. The "More From Our Collection" cards are now generated by JavaScript from a product data array, and each collection product was given a name, type, and notes. Wrapped the scent-family sections in `#product-list` with `data-family` and `data-price` attributes so they can be filtered and re-ordered. The collection grid columns were changed to `minmax(240px, 270px)` so three cards fit per row and stay centred when some are filtered out. |
 | 28 October 2026 | Part 3 | Add to Cart / JavaScript | Added "Add to Cart" buttons to all 8 fragrances and a shopping cart built with DOM manipulation: a floating cart button with an item count, and a slide-in side panel with quantity controls, remove, clear cart, a running total, and a link to `enquiry.html`. The cart is saved in `localStorage` (inside `try/catch`) so it survives a page reload. Re-ordered `js/main.js` so the collection is created before the lightbox code, which keeps the lightbox working on the new images. |
+| 28 October 2026 | Part 3 | Forms / Validation | Rebuilt the enquiry form on `enquiry.html` with HTML5 validation attributes (`required`, `minlength`, `maxlength`, `min`, `max`, `type="email"`, `type="tel"`, `type="date"`) and custom JavaScript validation with an error message under each field (updated while typing), a live character counter, and fields that show or hide depending on the enquiry type. Added AJAX submission with `fetch` (the form's `action` points to a test API) and a response showing price, availability, discounts, delivery, and an estimated total. The cart's "Enquire About These Items" button now pre-fills the form, and the quantity field is hidden when "My cart" is chosen. |
+| 28 October 2026 | Part 3 | Forms / Email | Added a contact form to `contact.html` (name, email, phone, message type, subject, message) with the same validation. Valid messages are compiled into an email to `filloi@nicheperfumes.co.za` and opened in the visitor's email app through a `mailto:` link, with an on-page preview. The form's `action="mailto:..."` remains as a fallback if JavaScript is turned off. |
+| 28 October 2026 | Part 3 | Security | Form responses and previews are built with `createElement` and `textContent` instead of `innerHTML` with visitor input, to prevent cross-site scripting (XSS). |
+| 28 October 2026 | Part 3 | Documentation | Updated the README: Key Features table, Part 3 Details (JavaScript, Forms, and Security sections), Changelog, and References. |
+
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13
@@ -315,3 +342,9 @@ Esri (2026) *World Light Gray Canvas Base* [Map tiles]. Available at: https://se
 MDN Web Docs (2026) *Window: localStorage property*. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage (Accessed: 28 October 2026).
 
 MDN Web Docs (2026) *Array.prototype.sort()*. Available at: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort (Accessed: 28 October 2026).
+
+MDN Web Docs (2026) *Client-side form validation*. Available at: https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation (Accessed: 28 October 2026).
+
+MDN Web Docs (2026) *Using the Fetch API*. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch (Accessed: 28 October 2026).
+
+JSONPlaceholder (2026) *Free fake and reliable API for testing and prototyping*. Available at: https://jsonplaceholder.typicode.com/ (Accessed: 28 October 2026).

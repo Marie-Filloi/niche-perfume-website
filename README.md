@@ -3,6 +3,9 @@
 ## Project Title
 Niche Perfumes Website — WEDE5020 Portfolio of Evidence (Parts 1 to 3)
 
+## Live Website
+🌐 **https://marie-filloi.github.io/niche-perfume-website/** (deployed with GitHub Pages)
+
 ## Student Information
 - **Name:** Filloi Marie Antoinette
 - **Student Number:** ST10494651
@@ -178,12 +181,74 @@ logged in the Changelog below.
   "[Product feedback] ...". The visitor sees a preview and their email app opens with the message
   ready to send (`mailto:` link built with `encodeURIComponent`).
 
+### Search Engine Optimisation (SEO)
+
+**Keyword research.** The keywords were chosen from what a Cape Town customer would type into
+Google when looking for authentic perfume, and from the market research in the References
+(demand for niche, authentic, and premium fragrances in South Africa):
+
+| Page | Main keywords |
+|---|---|
+| Home | luxury perfume Cape Town, authentic perfume South Africa, niche fragrances |
+| About | perfume boutique Cape Town, how to choose a perfume, perfume FAQ |
+| Products | woody / floral / oriental / fresh citrus / unisex perfume, buy perfume Cape Town |
+| Enquiry | perfume price enquiry, corporate perfume gifts, perfume delivery Cape Town |
+| Contact | perfume shop Cape Town CBD, V&A Waterfront perfume, perfume shop near me |
+
+**On-page SEO**
+- **Title tags and meta descriptions:** every page has its own `<title>` (under 60 characters)
+  and `<meta name="description">` (under 160 characters) built around its keywords, plus
+  `keywords`, `author`, `robots`, and a `canonical` link.
+- **Open Graph tags** (`og:title`, `og:description`, `og:image`, `og:url`, `og:locale`) give a
+  clean preview when a page is shared on WhatsApp, Facebook, or LinkedIn.
+- **Header tags:** one `<h1>` (the brand) on every page, an `<h2>` for each page's main title, and
+  `<h3>`/`<h4>` for sections, products, and questions.
+- **Image optimisation:** descriptive file names (e.g. `woody-perfume.jpg`,
+  `fresh-citrus-perfume.jpg`, `featured-woody-perfume.jpg` instead of `product-1.jpg`), descriptive
+  `alt` text, 400px and 800px versions with `srcset`, and `loading="lazy"` on images lower down the
+  page.
+- **URL structure:** short, clean, lowercase page names (`about.html`, `products.html`,
+  `enquiry.html`, `contact.html`).
+- **Internal linking:** shared navigation on every page, plus links inside the content (the
+  hero "Shop Now" button, the FAQ answers linking to Products and Enquiry, and the cart linking
+  to Enquiry).
+- **Mobile-friendliness:** responsive layout, hamburger menu, and touch-friendly buttons, tested
+  at 375px, 768px, and 1440px.
+
+**Off-page SEO (plan for the business)**
+- **Backlinks:** list the store on South African directories and local guides (e.g. Cape Town
+  shopping and V&A Waterfront store directories), and partner with local beauty and lifestyle
+  bloggers for fragrance reviews that link back to the website.
+- **Social media:** promote new arrivals and the scent guide on Instagram, Facebook, and TikTok,
+  always linking to the Products page (the Contact page already has Instagram and Facebook
+  links, ready to point to the real profiles once they are created).
+- **Local SEO:** the Contact page contains schema.org `Store` data (JSON-LD) with the address,
+  phone number, coordinates, and opening hours, so Google can show the store in local results.
+  The next step is a Google Business Profile for each store with the same details.
+
+**Additional requests**
+- **`robots.txt`:** allows all crawlers, blocks the `docs/` folder (project screenshots), and
+  points to the sitemap. Note: search engines read `robots.txt` from the root of the domain, so
+  on GitHub Pages (a sub-folder site) it takes full effect once the site moves to its own domain,
+  e.g. `nicheperfumes.co.za`.
+- **`sitemap.xml`:** lists all five pages with their last-modified date, change frequency, and
+  priority.
+- **Page speed:** product images reduced from about 1.5 MB to under 135 KB each, responsive
+  `srcset` images, lazy loading, and `preconnect` links so Google Fonts load sooner.
+
 ### Security
 - Visitor input is never inserted as HTML: both form responses are built with `createElement` and
   `textContent`, so code typed into a form cannot run on the page (protection against XSS).
 - The Leaflet library is loaded with Subresource Integrity (`integrity` and `crossorigin`), so the
   browser refuses the file if it has been changed.
 - `localStorage` access is wrapped in `try/catch`, so the cart still works if storage is blocked.
+- The live site is served over HTTPS by GitHub Pages.
+
+### Deployment
+The website is deployed with **GitHub Pages** from the `main` branch (root folder) and is live at
+https://marie-filloi.github.io/niche-perfume-website/. Every push to `main` updates the live site
+automatically. After deployment, all five pages were tested online on a laptop and a phone
+(navigation, images, lightbox, cart, FAQ, map, and both forms).
 
 ## Sitemap
 ![Niche Perfumes Sitemap](docs/sitemap.png)
@@ -232,6 +297,13 @@ Shared across all five pages:
 | 28 October 2026 | Part 3 | Forms / Email | Added a contact form to `contact.html` (name, email, phone, message type, subject, message) with the same validation. Valid messages are compiled into an email to `filloi@nicheperfumes.co.za` and opened in the visitor's email app through a `mailto:` link, with an on-page preview. The form's `action="mailto:..."` remains as a fallback if JavaScript is turned off. |
 | 28 October 2026 | Part 3 | Security | Form responses and previews are built with `createElement` and `textContent` instead of `innerHTML` with visitor input, to prevent cross-site scripting (XSS). |
 | 28 October 2026 | Part 3 | Documentation | Updated the README: Key Features table, Part 3 Details (JavaScript, Forms, and Security sections), Changelog, and References. |
+| 28 October 2026 | Part 3 | Deployment | Deployed the website with GitHub Pages (Settings → Pages → Deploy from branch `main`, root folder). Tested all five pages online on a laptop and a phone. Live URL: https://marie-filloi.github.io/niche-perfume-website/ |
+| 28 October 2026 | Part 3 | SEO / Meta Tags | Added a unique `<title>`, `meta description`, `keywords`, `author`, `robots`, `canonical` link, and Open Graph tags to the `<head>` of all five pages, based on keyword research for each page. Added `preconnect` links for Google Fonts. |
+| 28 October 2026 | Part 3 | SEO / Local SEO | Added schema.org `Store` structured data (JSON-LD) to `contact.html` with the business name, address, phone, email, coordinates, price range, and opening hours. |
+| 28 October 2026 | Part 3 | SEO / Files | Created `robots.txt` (allows crawlers, blocks `docs/`, links to the sitemap) and `sitemap.xml` (all five pages with `lastmod`, `changefreq`, and `priority`) in the root folder. |
+| 28 October 2026 | Part 3 | SEO / Images | Renamed the product images with descriptive file names in `images/products/small/` and `images/products/medium/` (e.g. `product-1.jpg` → `woody-perfume.jpg`) and the homepage images (`featured-woody-perfume.jpg`, `featured-fresh-perfume.jpg`), updated `products.html`, `index.html`, and `js/main.js`, improved the homepage `alt` text, and added `loading="lazy"` to images lower down the page. |
+| 28 October 2026 | Part 3 | Images | Replaced the duplicate Fresh / Citrus image (it was the same photo as Woody) with a new Pexels photo of a perfume bottle with a lemon, resized to 400px and 800px. |
+| 28 October 2026 | Part 3 | References | Corrected the product image references: added the missing references for the Versace and Chanel photos and the new citrus photo, and removed the reference for a photo no longer used on the site. Added an SEO section (keyword research, on-page, off-page, and local SEO) and a Deployment section to the README. |
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
@@ -275,10 +347,6 @@ https://www.pexels.com/photo/modern-perfume-and-cosmetics-store-interior-in-lond
 
 **Products**
 
-Maram (2024) *Luxurious Elie Saab perfume bottle with a botanical accent on textured fabric*.
-[Photograph]. Pexels. Available at:
-https://www.pexels.com/photo/perfume-in-glass-bottle-26838653/ (Accessed: 13 August 2026).
-
 Daza, A. (2024) *Luxury perfume bottle and gold jewelry on soft white fabric create an elegant
 scene*. [Photograph]. Pexels. Available at:
 https://www.pexels.com/photo/luxury-perfume-in-a-glass-bottle-17567999/ (Accessed: 13 August
@@ -302,6 +370,21 @@ Lalada (2025) *A close-up of luxury perfume and lipstick showcasing elegance and
 [Photograph]. Pexels. Available at:
 https://www.pexels.com/photo/glass-perfume-bottle-beside-a-lipstick-8981521/ (Accessed: 13
 August 2026).
+
+Arjunn. la (2024) *Versace Eros perfume bottle and box displayed on stylish light fabric,
+capturing luxury*. [Photograph]. Pexels. Available at:
+https://www.pexels.com/photo/versace-eros-perfume-on-elegant-fabric-28460123/ (Accessed: 13
+August 2026).
+
+Chouette, L. (2024) *Chanel No 5 perfume bottle elegantly surrounded by white roses, symbolizing
+luxury*. [Photograph]. Pexels. Available at:
+https://www.pexels.com/photo/a-bottle-of-chanel-no-5-perfume-lying-on-a-white-surface-with-flowers-22589355/
+(Accessed: 13 August 2026).
+
+Chouette, L. (2024) *Elegant Chanel No 5 perfume bottle with a lemon, perfect for luxury and
+freshness themes*. [Photograph]. Pexels. Available at:
+https://www.pexels.com/photo/perfume-bottle-and-half-a-lemon-on-a-white-background-21574969/
+(Accessed: 28 October 2026).
 
 **Enquiry**
 
@@ -348,3 +431,13 @@ MDN Web Docs (2026) *Client-side form validation*. Available at: https://develop
 MDN Web Docs (2026) *Using the Fetch API*. Available at: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch (Accessed: 28 October 2026).
 
 JSONPlaceholder (2026) *Free fake and reliable API for testing and prototyping*. Available at: https://jsonplaceholder.typicode.com/ (Accessed: 28 October 2026).
+
+Google Search Central (2026) *Introduction to robots.txt*. Available at: https://developers.google.com/search/docs/crawling-indexing/robots/intro (Accessed: 28 October 2026).
+
+Google Search Central (2026) *Build and submit a sitemap*. Available at: https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap (Accessed: 28 October 2026).
+
+Google Search Central (2026) *Local business (LocalBusiness) structured data*. Available at: https://developers.google.com/search/docs/appearance/structured-data/local-business (Accessed: 28 October 2026).
+
+The Open Graph protocol (2026) *The Open Graph protocol*. Available at: https://ogp.me/ (Accessed: 28 October 2026).
+
+GitHub Docs (2026) *Creating a GitHub Pages site*. Available at: https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site (Accessed: 28 October 2026).

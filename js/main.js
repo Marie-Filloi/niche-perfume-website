@@ -32,7 +32,7 @@ const collectionProducts = [
         type: 'Eau de Parfum',
         notes: 'Jasmine, rose and soft pear',
         price: 610,
-        image: 'product-6.jpg'
+        image: 'luminous-floral-perfume.jpg'
     },
     {
         name: 'Aquatic Fresh',
@@ -40,7 +40,7 @@ const collectionProducts = [
         type: 'Eau de Toilette',
         notes: 'Mint, green apple and cedar',
         price: 670,
-        image: 'product-7.jpg'
+        image: 'aquatic-fresh-perfume.jpg'
     },
     {
         name: 'Classic Floral',
@@ -48,7 +48,7 @@ const collectionProducts = [
         type: 'Eau de Parfum',
         notes: 'Aldehydes, rose and jasmine',
         price: 590,
-        image: 'product-8.jpg'
+        image: 'classic-floral-perfume.jpg'
     }
 ];
 
@@ -62,7 +62,7 @@ if (collectionList) {
         card.innerHTML =
             '<img src="images/products/medium/' + product.image + '"' +
             ' srcset="images/products/small/' + product.image + ' 400w, images/products/medium/' + product.image + ' 800w"' +
-            ' sizes="(max-width: 768px) 100vw, 300px"' +
+            ' sizes="(max-width: 768px) 100vw, 300px" loading="lazy"' +
             ' alt="' + product.name + ' perfume bottle">' +
             '<h4>' + product.name + '</h4>' +
             '<p class="collection-notes">' + product.type + ' · ' + product.notes + '</p>' +
@@ -832,7 +832,7 @@ if (enquiryForm) {
         } else if (data.type === 'stockist') {
             addLine(responseBox, 'p', 'Thank you for your interest in stocking Niche Perfumes. Our partnerships team will email our wholesale price list and terms within 2 business days.');
         } else {
-            addLine(responseBox, 'p', 'We have received your message and will reply within 1–2 business days.');
+            addLine(responseBox, 'p', 'We have received your message. Thank you for getting in touch with Niche Perfumes.');
         }
 
         if (!sentOnline) {

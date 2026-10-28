@@ -24,7 +24,7 @@ This repository contains the full project across three parts:
   for all five pages.
 - **Part 2: Designing the Visuals** — CSS styling and responsive design.
 - **Part 3: Enhancing Functionality and SEO** — corrections from the Part 2 feedback, JavaScript
-  functionality, form validation, SEO, and deployment (in progress).
+  functionality, form validation, SEO, and deployment.
 
 ## Website Goals and Objectives
 - Increase online visibility and generate direct sales enquiries.
@@ -91,8 +91,10 @@ Part 2 covers CSS styling and responsive design:
   400px (mobile), 768px (tablet), 1024px, and 1440px (desktop)
   
 ## Responsive Design Testing
-Screenshots were captured using Chrome DevTools' device toolbar at three widths:
-Desktop (1440px), Tablet (768px), and Mobile (375px).
+Screenshots were captured using the browser's developer tools device toolbar at three widths:
+Desktop (1440px), Tablet (768px), and Mobile (375px). They were retaken on the live website for
+Part 3, so they show the hamburger menu on tablet and mobile, the "Find Your Fragrance" toolbar,
+and the new forms.
 
 ### Home
 | Desktop | Tablet | Mobile |
@@ -120,7 +122,20 @@ Desktop (1440px), Tablet (768px), and Mobile (375px).
 | ![Contact Desktop](docs/contact-desktop.png) | ![Contact Tablet](docs/contact-tablet.png) | ![Contact Mobile](docs/contact-mobile.png) |
 
 ## Part 3 Details
-Part 3 covers functionality, forms, SEO, and deployment. Completed so far:
+Part 3 covers functionality, forms, SEO, and deployment.
+
+### Part 3 Features in Action
+| Hamburger menu (mobile) | Search and filter | Lightbox gallery |
+|---|---|---|
+| ![Hamburger menu open on mobile](docs/features/menu-mobile.png) | ![Product search for "rose"](docs/features/product-search.png) | ![Lightbox showing an enlarged product image](docs/features/lightbox.png) |
+
+| Shopping cart | FAQ accordion | Interactive store map |
+|---|---|---|
+| ![Cart side panel with two fragrances](docs/features/cart.png) | ![FAQ with question 05 open](docs/features/faq.png) | ![Leaflet map with a store popup](docs/features/store-map.png) |
+
+| Enquiry response | Contact email preview |
+|---|---|
+| ![Enquiry form response with price and total](docs/features/enquiry-response.png) | ![Contact form email preview](docs/features/contact-email.png) |
 
 ### Corrections from Part 2 Feedback
 The lecturer's feedback for Part 2 asked for three changes. Each one has been completed and is
@@ -304,6 +319,9 @@ Shared across all five pages:
 | 28 October 2026 | Part 3 | SEO / Images | Renamed the product images with descriptive file names in `images/products/small/` and `images/products/medium/` (e.g. `product-1.jpg` → `woody-perfume.jpg`) and the homepage images (`featured-woody-perfume.jpg`, `featured-fresh-perfume.jpg`), updated `products.html`, `index.html`, and `js/main.js`, improved the homepage `alt` text, and added `loading="lazy"` to images lower down the page. |
 | 28 October 2026 | Part 3 | Images | Replaced the duplicate Fresh / Citrus image (it was the same photo as Woody) with a new Pexels photo of a perfume bottle with a lemon, resized to 400px and 800px. |
 | 28 October 2026 | Part 3 | References | Corrected the product image references: added the missing references for the Versace and Chanel photos and the new citrus photo, and removed the reference for a photo no longer used on the site. Added an SEO section (keyword research, on-page, off-page, and local SEO) and a Deployment section to the README. |
+| 28 October 2026 | Part 3 | Bug Fix | Fixed the lightbox showing a broken image in Microsoft Edge after `loading="lazy"` was added: Edge replaces lazy images with placeholders, so the lightbox now uses the image the browser is actually showing (`currentSrc`) and swaps `/small/` for `/medium/` to load the 800px version. |
+| 29 October 2026 | Part 3 | Testing | Retook all 15 responsive screenshots (Home, About, Products, Enquiry, Contact at 1440px, 768px, and 375px) on the live website, replacing the Part 2 versions in `docs/`. |
+| 29 October 2026 | Part 3 | Documentation | Added a "Part 3 Features in Action" gallery to the README with eight screenshots in `docs/features/` (hamburger menu, product search, lightbox, cart, FAQ, store map, enquiry response, and contact email preview), and marked Part 3 as complete. |
 
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:

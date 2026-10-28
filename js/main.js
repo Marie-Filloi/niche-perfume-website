@@ -393,14 +393,13 @@ if (galleryImages.length > 0) {
 
     let lastFocusedImage = null;
 
-    // 3. Open: show the largest version of the clicked image
-    //    (the last file listed in its srcset, e.g. the 800px "medium" version)
+        // 3. Open: show the large (800px "medium") version of the clicked image.
+    //    currentSrc is the file the browser is showing; if it is the small
+    //    400px version, swap the folder name to load the medium version.
     function openLightbox(image) {
         lastFocusedImage = image;
-        const sources = image.srcset ? image.srcset.split(',') : [];
-        const largestSource = sources.length > 0
-            ? sources[sources.length - 1].trim().split(' ')[0]
-            : image.src;
+        const shownSource = image.currentSrc || image.src;
+        const largestSource = shownSource.replace('/small/', '/medium/');
         lightboxImage.src = largestSource;
         lightboxImage.alt = image.alt;
         caption.textContent = image.alt;

@@ -1,0 +1,8 @@
+# Niche Perfumes - instructions for search engine crawlers
+User-agent: *
+Allow: /
+
+# Project documentation (screenshots, sitemap and wireframe images) does not need to be indexed
+Disallow: /niche-perfume-website/docs/
+
+Sitemap: https://marie-filloi.github.io/niche-perfume-website/sitemap.xml

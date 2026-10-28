@@ -322,7 +322,7 @@ Shared across all five pages:
 | 28 October 2026 | Part 3 | Bug Fix | Fixed the lightbox showing a broken image in Microsoft Edge after `loading="lazy"` was added: Edge replaces lazy images with placeholders, so the lightbox now uses the image the browser is actually showing (`currentSrc`) and swaps `/small/` for `/medium/` to load the 800px version. |
 | 29 October 2026 | Part 3 | Testing | Retook all 15 responsive screenshots (Home, About, Products, Enquiry, Contact at 1440px, 768px, and 375px) on the live website, replacing the Part 2 versions in `docs/`. |
 | 29 October 2026 | Part 3 | Documentation | Added a "Part 3 Features in Action" gallery to the README with eight screenshots in `docs/features/` (hamburger menu, product search, lightbox, cart, FAQ, store map, enquiry response, and contact email preview), and marked Part 3 as complete. |
-
+| 29 October 2026 | Part 3 | Bug Fix | Moved `robots.txt` and `sitemap.xml` into the project root folder: they had been created one folder above the repository, so they were not included in the earlier commit or published. Both files are now live at `/robots.txt` and `/sitemap.xml`. |
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13

@@ -55,13 +55,22 @@ Design palette (used consistently across the proposal and the coded pages):
 - Supporting: Soft Grey `#8A8A8A`
 
 ## Timeline and Milestones
-| Milestone | Target Week |
-|---|---|
-| Proposal submitted and organisation approved | Week 1 |
-| Content and image research completed | Week 2 |
-| File/folder structure and GitHub repository set up | Week 3 |
-| HTML structure for all 5 pages completed | Week 4 |
-| Part 1 submission (HTML, ZIP, GitHub link) | Week 5 |
+| Milestone | Part | Target / Completed |
+|---|---|---|
+| Proposal submitted and organisation approved | Part 1 | Week 1 |
+| Content and image research completed | Part 1 | Week 2 |
+| File/folder structure and GitHub repository set up | Part 1 | Week 3 |
+| HTML structure for all 5 pages completed | Part 1 | Week 4 |
+| Part 1 submission (HTML, ZIP, GitHub link) | Part 1 | Week 5 (August 2026) |
+| External stylesheet, base styles, layout and responsive design | Part 2 | 25 August 2026 |
+| Design tokens, Google Fonts, CSS Grid and responsive testing | Part 2 | 17 September 2026 |
+| Part 2 submission (GitHub link) | Part 2 | September 2026 |
+| Corrections from the Part 2 feedback | Part 3 | 25 October 2026 |
+| JavaScript features (menu, lightbox, FAQ, map, search, cart) | Part 3 | 25–28 October 2026 |
+| Form validation (enquiry and contact forms) | Part 3 | 28 October 2026 |
+| SEO, robots.txt, sitemap.xml and deployment (GitHub Pages) | Part 3 | 28–29 October 2026 |
+| Final screenshots and README | Part 3 | 29 October 2026 |
+| Part 3 submission (GitHub link and live website) | Part 3 | November 2026 |
 
 ## Part 1 Details
 Part 1 covers project planning and the foundational HTML structure:
@@ -323,6 +332,7 @@ Shared across all five pages:
 | 29 October 2026 | Part 3 | Testing | Retook all 15 responsive screenshots (Home, About, Products, Enquiry, Contact at 1440px, 768px, and 375px) on the live website, replacing the Part 2 versions in `docs/`. |
 | 29 October 2026 | Part 3 | Documentation | Added a "Part 3 Features in Action" gallery to the README with eight screenshots in `docs/features/` (hamburger menu, product search, lightbox, cart, FAQ, store map, enquiry response, and contact email preview), and marked Part 3 as complete. |
 | 29 October 2026 | Part 3 | Bug Fix | Moved `robots.txt` and `sitemap.xml` into the project root folder: they had been created one folder above the repository, so they were not included in the earlier commit or published. Both files are now live at `/robots.txt` and `/sitemap.xml`. |
+| 2 November 2026 | Part 3 | Documentation | Updated the Timeline and Milestones table to include the Part 2 and Part 3 milestones, with a Part column and completion dates. |
 ## References
 Bonafide Research (2025) *South Africa Perfume Market Growth & Demand*. Available at:
 https://www.bonafideresearch.com/product/6212192417/south-africa-perfume-market (Accessed: 13
